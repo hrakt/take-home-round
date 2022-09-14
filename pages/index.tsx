@@ -1,4 +1,5 @@
 import Image from "next/image";
+import IonIcon from "../component/ion-icon/ion-icon";
 import IonPage from "../component/ion-page/ion-page";
 
 export default function Home() {
@@ -28,7 +29,11 @@ export default function Home() {
                       <ion-card-title>Madison, WI</ion-card-title>
                     </ion-card-header>
                     <ion-card-content>
-                      <ion-icon name="pin" slot="start"></ion-icon>
+                      <IonIcon
+                        ios="/svg/pin.svg"
+                        md="/svg/pin-sharp.svg"
+                        slot="start"
+                      />
                       Keep close to Nature&apos;s heart... and break clear away,
                       once in awhile, and climb a mountain or spend a week in
                       the woods. Wash your spirit clean.

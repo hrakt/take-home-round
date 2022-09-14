@@ -18,12 +18,14 @@ import "@ionic/core/css/padding.css";
 import "@ionic/core/css/text-alignment.css";
 import "@ionic/core/css/text-transformation.css";
 
+import "../styles/overrides.css";
 import "../theme/variables.css";
 
 function CustomApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     ionDefineCustomElements(window);
   });
+
   return (
     <ion-app>
       <Component {...pageProps} />
