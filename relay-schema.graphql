@@ -1,0 +1,5790 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """measured in seconds"""
+  ttl: Int! = 60
+
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+) on QUERY
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+"""An object with globally unique ID"""
+interface Node {
+  """A globally unique identifier"""
+  id: ID!
+}
+
+type PageInfo {
+  endCursor: String!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+"""
+columns and relationships of "crudio.BlogTags"
+"""
+type crudio_BlogTags implements Node {
+  """An object relationship"""
+  Blog: crudio_Blogs
+  BlogId: uuid
+
+  """An object relationship"""
+  Tag: crudio_Tags
+  TagId: uuid
+  id: ID!
+  priority: Int
+  published_date: timestamp
+}
+
+"""
+A Relay connection object on "crudio.BlogTags"
+"""
+type crudio_BlogTagsConnection {
+  edges: [crudio_BlogTagsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_BlogTagsEdge {
+  cursor: String!
+  node: crudio_BlogTags!
+}
+
+"""
+aggregated selection of "crudio.BlogTags"
+"""
+type crudio_BlogTags_aggregate {
+  aggregate: crudio_BlogTags_aggregate_fields
+  nodes: [crudio_BlogTags!]!
+}
+
+"""
+aggregate fields of "crudio.BlogTags"
+"""
+type crudio_BlogTags_aggregate_fields {
+  avg: crudio_BlogTags_avg_fields
+  count(columns: [crudio_BlogTags_select_column!], distinct: Boolean): Int!
+  max: crudio_BlogTags_max_fields
+  min: crudio_BlogTags_min_fields
+  stddev: crudio_BlogTags_stddev_fields
+  stddev_pop: crudio_BlogTags_stddev_pop_fields
+  stddev_samp: crudio_BlogTags_stddev_samp_fields
+  sum: crudio_BlogTags_sum_fields
+  var_pop: crudio_BlogTags_var_pop_fields
+  var_samp: crudio_BlogTags_var_samp_fields
+  variance: crudio_BlogTags_variance_fields
+}
+
+"""
+order by aggregate values of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_aggregate_order_by {
+  avg: crudio_BlogTags_avg_order_by
+  count: order_by
+  max: crudio_BlogTags_max_order_by
+  min: crudio_BlogTags_min_order_by
+  stddev: crudio_BlogTags_stddev_order_by
+  stddev_pop: crudio_BlogTags_stddev_pop_order_by
+  stddev_samp: crudio_BlogTags_stddev_samp_order_by
+  sum: crudio_BlogTags_sum_order_by
+  var_pop: crudio_BlogTags_var_pop_order_by
+  var_samp: crudio_BlogTags_var_samp_order_by
+  variance: crudio_BlogTags_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "crudio.BlogTags"
+"""
+input crudio_BlogTags_arr_rel_insert_input {
+  data: [crudio_BlogTags_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: crudio_BlogTags_on_conflict
+}
+
+"""aggregate avg on columns"""
+type crudio_BlogTags_avg_fields {
+  priority: Float
+}
+
+"""
+order by avg() on columns of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_avg_order_by {
+  priority: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.BlogTags". All fields are combined with a logical 'AND'.
+"""
+input crudio_BlogTags_bool_exp {
+  Blog: crudio_Blogs_bool_exp
+  BlogId: uuid_comparison_exp
+  Tag: crudio_Tags_bool_exp
+  TagId: uuid_comparison_exp
+  _and: [crudio_BlogTags_bool_exp!]
+  _not: crudio_BlogTags_bool_exp
+  _or: [crudio_BlogTags_bool_exp!]
+  id: uuid_comparison_exp
+  priority: Int_comparison_exp
+  published_date: timestamp_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.BlogTags"
+"""
+enum crudio_BlogTags_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  BlogTags_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "crudio.BlogTags"
+"""
+input crudio_BlogTags_inc_input {
+  priority: Int
+}
+
+"""
+input type for inserting data into table "crudio.BlogTags"
+"""
+input crudio_BlogTags_insert_input {
+  Blog: crudio_Blogs_obj_rel_insert_input
+  BlogId: uuid
+  Tag: crudio_Tags_obj_rel_insert_input
+  TagId: uuid
+  id: uuid
+  priority: Int
+  published_date: timestamp
+}
+
+"""aggregate max on columns"""
+type crudio_BlogTags_max_fields {
+  BlogId: uuid
+  TagId: uuid
+  id: uuid
+  priority: Int
+  published_date: timestamp
+}
+
+"""
+order by max() on columns of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_max_order_by {
+  BlogId: order_by
+  TagId: order_by
+  id: order_by
+  priority: order_by
+  published_date: order_by
+}
+
+"""aggregate min on columns"""
+type crudio_BlogTags_min_fields {
+  BlogId: uuid
+  TagId: uuid
+  id: uuid
+  priority: Int
+  published_date: timestamp
+}
+
+"""
+order by min() on columns of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_min_order_by {
+  BlogId: order_by
+  TagId: order_by
+  id: order_by
+  priority: order_by
+  published_date: order_by
+}
+
+"""
+response of any mutation on the table "crudio.BlogTags"
+"""
+type crudio_BlogTags_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_BlogTags!]!
+}
+
+"""
+on_conflict condition type for table "crudio.BlogTags"
+"""
+input crudio_BlogTags_on_conflict {
+  constraint: crudio_BlogTags_constraint!
+  update_columns: [crudio_BlogTags_update_column!]! = []
+  where: crudio_BlogTags_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.BlogTags"."""
+input crudio_BlogTags_order_by {
+  Blog: crudio_Blogs_order_by
+  BlogId: order_by
+  Tag: crudio_Tags_order_by
+  TagId: order_by
+  id: order_by
+  priority: order_by
+  published_date: order_by
+}
+
+"""primary key columns input for table: crudio_BlogTags"""
+input crudio_BlogTags_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.BlogTags"
+"""
+enum crudio_BlogTags_select_column {
+  """column name"""
+  BlogId
+
+  """column name"""
+  TagId
+
+  """column name"""
+  id
+
+  """column name"""
+  priority
+
+  """column name"""
+  published_date
+}
+
+"""
+input type for updating data in table "crudio.BlogTags"
+"""
+input crudio_BlogTags_set_input {
+  BlogId: uuid
+  TagId: uuid
+  id: uuid
+  priority: Int
+  published_date: timestamp
+}
+
+"""aggregate stddev on columns"""
+type crudio_BlogTags_stddev_fields {
+  priority: Float
+}
+
+"""
+order by stddev() on columns of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_stddev_order_by {
+  priority: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type crudio_BlogTags_stddev_pop_fields {
+  priority: Float
+}
+
+"""
+order by stddev_pop() on columns of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_stddev_pop_order_by {
+  priority: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type crudio_BlogTags_stddev_samp_fields {
+  priority: Float
+}
+
+"""
+order by stddev_samp() on columns of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_stddev_samp_order_by {
+  priority: order_by
+}
+
+"""aggregate sum on columns"""
+type crudio_BlogTags_sum_fields {
+  priority: Int
+}
+
+"""
+order by sum() on columns of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_sum_order_by {
+  priority: order_by
+}
+
+"""
+update columns of table "crudio.BlogTags"
+"""
+enum crudio_BlogTags_update_column {
+  """column name"""
+  BlogId
+
+  """column name"""
+  TagId
+
+  """column name"""
+  id
+
+  """column name"""
+  priority
+
+  """column name"""
+  published_date
+}
+
+input crudio_BlogTags_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: crudio_BlogTags_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_BlogTags_set_input
+  where: crudio_BlogTags_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type crudio_BlogTags_var_pop_fields {
+  priority: Float
+}
+
+"""
+order by var_pop() on columns of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_var_pop_order_by {
+  priority: order_by
+}
+
+"""aggregate var_samp on columns"""
+type crudio_BlogTags_var_samp_fields {
+  priority: Float
+}
+
+"""
+order by var_samp() on columns of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_var_samp_order_by {
+  priority: order_by
+}
+
+"""aggregate variance on columns"""
+type crudio_BlogTags_variance_fields {
+  priority: Float
+}
+
+"""
+order by variance() on columns of table "crudio.BlogTags"
+"""
+input crudio_BlogTags_variance_order_by {
+  priority: order_by
+}
+
+"""
+columns and relationships of "crudio.Blogs"
+"""
+type crudio_Blogs implements Node {
+  """An array relationship"""
+  BlogTags(
+    """distinct select on columns"""
+    distinct_on: [crudio_BlogTags_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_BlogTags_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_BlogTags_bool_exp
+  ): [crudio_BlogTags!]!
+
+  """An aggregate relationship"""
+  BlogTags_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_BlogTags_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_BlogTags_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_BlogTags_bool_exp
+  ): crudio_BlogTags_aggregate!
+
+  """An array relationship connection"""
+  BlogTags_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_BlogTags_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_BlogTags_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_BlogTags_bool_exp
+  ): crudio_BlogTagsConnection!
+
+  """An object relationship"""
+  User: crudio_Users
+  UserId: uuid
+  article: String
+  created: timestamp!
+  deleted: timestamp
+  id: ID!
+  published_date: timestamp
+}
+
+"""
+A Relay connection object on "crudio.Blogs"
+"""
+type crudio_BlogsConnection {
+  edges: [crudio_BlogsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_BlogsEdge {
+  cursor: String!
+  node: crudio_Blogs!
+}
+
+"""
+aggregated selection of "crudio.Blogs"
+"""
+type crudio_Blogs_aggregate {
+  aggregate: crudio_Blogs_aggregate_fields
+  nodes: [crudio_Blogs!]!
+}
+
+"""
+aggregate fields of "crudio.Blogs"
+"""
+type crudio_Blogs_aggregate_fields {
+  count(columns: [crudio_Blogs_select_column!], distinct: Boolean): Int!
+  max: crudio_Blogs_max_fields
+  min: crudio_Blogs_min_fields
+}
+
+"""
+order by aggregate values of table "crudio.Blogs"
+"""
+input crudio_Blogs_aggregate_order_by {
+  count: order_by
+  max: crudio_Blogs_max_order_by
+  min: crudio_Blogs_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "crudio.Blogs"
+"""
+input crudio_Blogs_arr_rel_insert_input {
+  data: [crudio_Blogs_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: crudio_Blogs_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.Blogs". All fields are combined with a logical 'AND'.
+"""
+input crudio_Blogs_bool_exp {
+  BlogTags: crudio_BlogTags_bool_exp
+  User: crudio_Users_bool_exp
+  UserId: uuid_comparison_exp
+  _and: [crudio_Blogs_bool_exp!]
+  _not: crudio_Blogs_bool_exp
+  _or: [crudio_Blogs_bool_exp!]
+  article: String_comparison_exp
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  published_date: timestamp_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.Blogs"
+"""
+enum crudio_Blogs_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Blogs_pkey
+}
+
+"""
+input type for inserting data into table "crudio.Blogs"
+"""
+input crudio_Blogs_insert_input {
+  BlogTags: crudio_BlogTags_arr_rel_insert_input
+  User: crudio_Users_obj_rel_insert_input
+  UserId: uuid
+  article: String
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  published_date: timestamp
+}
+
+"""aggregate max on columns"""
+type crudio_Blogs_max_fields {
+  UserId: uuid
+  article: String
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  published_date: timestamp
+}
+
+"""
+order by max() on columns of table "crudio.Blogs"
+"""
+input crudio_Blogs_max_order_by {
+  UserId: order_by
+  article: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  published_date: order_by
+}
+
+"""aggregate min on columns"""
+type crudio_Blogs_min_fields {
+  UserId: uuid
+  article: String
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  published_date: timestamp
+}
+
+"""
+order by min() on columns of table "crudio.Blogs"
+"""
+input crudio_Blogs_min_order_by {
+  UserId: order_by
+  article: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  published_date: order_by
+}
+
+"""
+response of any mutation on the table "crudio.Blogs"
+"""
+type crudio_Blogs_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_Blogs!]!
+}
+
+"""
+input type for inserting object relation for remote table "crudio.Blogs"
+"""
+input crudio_Blogs_obj_rel_insert_input {
+  data: crudio_Blogs_insert_input!
+
+  """upsert condition"""
+  on_conflict: crudio_Blogs_on_conflict
+}
+
+"""
+on_conflict condition type for table "crudio.Blogs"
+"""
+input crudio_Blogs_on_conflict {
+  constraint: crudio_Blogs_constraint!
+  update_columns: [crudio_Blogs_update_column!]! = []
+  where: crudio_Blogs_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.Blogs"."""
+input crudio_Blogs_order_by {
+  BlogTags_aggregate: crudio_BlogTags_aggregate_order_by
+  User: crudio_Users_order_by
+  UserId: order_by
+  article: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  published_date: order_by
+}
+
+"""primary key columns input for table: crudio_Blogs"""
+input crudio_Blogs_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.Blogs"
+"""
+enum crudio_Blogs_select_column {
+  """column name"""
+  UserId
+
+  """column name"""
+  article
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  published_date
+}
+
+"""
+input type for updating data in table "crudio.Blogs"
+"""
+input crudio_Blogs_set_input {
+  UserId: uuid
+  article: String
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  published_date: timestamp
+}
+
+"""
+update columns of table "crudio.Blogs"
+"""
+enum crudio_Blogs_update_column {
+  """column name"""
+  UserId
+
+  """column name"""
+  article
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  published_date
+}
+
+input crudio_Blogs_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_Blogs_set_input
+  where: crudio_Blogs_bool_exp!
+}
+
+"""
+columns and relationships of "crudio.Cactii"
+"""
+type crudio_Cactii implements Node {
+  created: timestamp!
+  deleted: timestamp
+  height: Int
+  id: ID!
+}
+
+"""
+A Relay connection object on "crudio.Cactii"
+"""
+type crudio_CactiiConnection {
+  edges: [crudio_CactiiEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_CactiiEdge {
+  cursor: String!
+  node: crudio_Cactii!
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.Cactii". All fields are combined with a logical 'AND'.
+"""
+input crudio_Cactii_bool_exp {
+  _and: [crudio_Cactii_bool_exp!]
+  _not: crudio_Cactii_bool_exp
+  _or: [crudio_Cactii_bool_exp!]
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  height: Int_comparison_exp
+  id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.Cactii"
+"""
+enum crudio_Cactii_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Cactii_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "crudio.Cactii"
+"""
+input crudio_Cactii_inc_input {
+  height: Int
+}
+
+"""
+input type for inserting data into table "crudio.Cactii"
+"""
+input crudio_Cactii_insert_input {
+  created: timestamp
+  deleted: timestamp
+  height: Int
+  id: uuid
+}
+
+"""
+response of any mutation on the table "crudio.Cactii"
+"""
+type crudio_Cactii_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_Cactii!]!
+}
+
+"""
+on_conflict condition type for table "crudio.Cactii"
+"""
+input crudio_Cactii_on_conflict {
+  constraint: crudio_Cactii_constraint!
+  update_columns: [crudio_Cactii_update_column!]! = []
+  where: crudio_Cactii_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.Cactii"."""
+input crudio_Cactii_order_by {
+  created: order_by
+  deleted: order_by
+  height: order_by
+  id: order_by
+}
+
+"""primary key columns input for table: crudio_Cactii"""
+input crudio_Cactii_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.Cactii"
+"""
+enum crudio_Cactii_select_column {
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  height
+
+  """column name"""
+  id
+}
+
+"""
+input type for updating data in table "crudio.Cactii"
+"""
+input crudio_Cactii_set_input {
+  created: timestamp
+  deleted: timestamp
+  height: Int
+  id: uuid
+}
+
+"""
+update columns of table "crudio.Cactii"
+"""
+enum crudio_Cactii_update_column {
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  height
+
+  """column name"""
+  id
+}
+
+input crudio_Cactii_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: crudio_Cactii_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_Cactii_set_input
+  where: crudio_Cactii_bool_exp!
+}
+
+"""
+columns and relationships of "crudio.Clients"
+"""
+type crudio_Clients implements Node {
+  """An object relationship"""
+  Cohort: crudio_Cohorts
+  CohortId: uuid
+  address: String
+  created: timestamp!
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: ID!
+  lastname: String
+  weight: Int
+}
+
+"""
+A Relay connection object on "crudio.Clients"
+"""
+type crudio_ClientsConnection {
+  edges: [crudio_ClientsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_ClientsEdge {
+  cursor: String!
+  node: crudio_Clients!
+}
+
+"""
+aggregated selection of "crudio.Clients"
+"""
+type crudio_Clients_aggregate {
+  aggregate: crudio_Clients_aggregate_fields
+  nodes: [crudio_Clients!]!
+}
+
+"""
+aggregate fields of "crudio.Clients"
+"""
+type crudio_Clients_aggregate_fields {
+  avg: crudio_Clients_avg_fields
+  count(columns: [crudio_Clients_select_column!], distinct: Boolean): Int!
+  max: crudio_Clients_max_fields
+  min: crudio_Clients_min_fields
+  stddev: crudio_Clients_stddev_fields
+  stddev_pop: crudio_Clients_stddev_pop_fields
+  stddev_samp: crudio_Clients_stddev_samp_fields
+  sum: crudio_Clients_sum_fields
+  var_pop: crudio_Clients_var_pop_fields
+  var_samp: crudio_Clients_var_samp_fields
+  variance: crudio_Clients_variance_fields
+}
+
+"""
+order by aggregate values of table "crudio.Clients"
+"""
+input crudio_Clients_aggregate_order_by {
+  avg: crudio_Clients_avg_order_by
+  count: order_by
+  max: crudio_Clients_max_order_by
+  min: crudio_Clients_min_order_by
+  stddev: crudio_Clients_stddev_order_by
+  stddev_pop: crudio_Clients_stddev_pop_order_by
+  stddev_samp: crudio_Clients_stddev_samp_order_by
+  sum: crudio_Clients_sum_order_by
+  var_pop: crudio_Clients_var_pop_order_by
+  var_samp: crudio_Clients_var_samp_order_by
+  variance: crudio_Clients_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "crudio.Clients"
+"""
+input crudio_Clients_arr_rel_insert_input {
+  data: [crudio_Clients_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: crudio_Clients_on_conflict
+}
+
+"""aggregate avg on columns"""
+type crudio_Clients_avg_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by avg() on columns of table "crudio.Clients"
+"""
+input crudio_Clients_avg_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.Clients". All fields are combined with a logical 'AND'.
+"""
+input crudio_Clients_bool_exp {
+  Cohort: crudio_Cohorts_bool_exp
+  CohortId: uuid_comparison_exp
+  _and: [crudio_Clients_bool_exp!]
+  _not: crudio_Clients_bool_exp
+  _or: [crudio_Clients_bool_exp!]
+  address: String_comparison_exp
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  dob: timestamp_comparison_exp
+  email: String_comparison_exp
+  firstname: String_comparison_exp
+  height: Int_comparison_exp
+  id: uuid_comparison_exp
+  lastname: String_comparison_exp
+  weight: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.Clients"
+"""
+enum crudio_Clients_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Clients_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "crudio.Clients"
+"""
+input crudio_Clients_inc_input {
+  height: Int
+  weight: Int
+}
+
+"""
+input type for inserting data into table "crudio.Clients"
+"""
+input crudio_Clients_insert_input {
+  Cohort: crudio_Cohorts_obj_rel_insert_input
+  CohortId: uuid
+  address: String
+  created: timestamp
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: uuid
+  lastname: String
+  weight: Int
+}
+
+"""aggregate max on columns"""
+type crudio_Clients_max_fields {
+  CohortId: uuid
+  address: String
+  created: timestamp
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: uuid
+  lastname: String
+  weight: Int
+}
+
+"""
+order by max() on columns of table "crudio.Clients"
+"""
+input crudio_Clients_max_order_by {
+  CohortId: order_by
+  address: order_by
+  created: order_by
+  deleted: order_by
+  dob: order_by
+  email: order_by
+  firstname: order_by
+  height: order_by
+  id: order_by
+  lastname: order_by
+  weight: order_by
+}
+
+"""aggregate min on columns"""
+type crudio_Clients_min_fields {
+  CohortId: uuid
+  address: String
+  created: timestamp
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: uuid
+  lastname: String
+  weight: Int
+}
+
+"""
+order by min() on columns of table "crudio.Clients"
+"""
+input crudio_Clients_min_order_by {
+  CohortId: order_by
+  address: order_by
+  created: order_by
+  deleted: order_by
+  dob: order_by
+  email: order_by
+  firstname: order_by
+  height: order_by
+  id: order_by
+  lastname: order_by
+  weight: order_by
+}
+
+"""
+response of any mutation on the table "crudio.Clients"
+"""
+type crudio_Clients_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_Clients!]!
+}
+
+"""
+on_conflict condition type for table "crudio.Clients"
+"""
+input crudio_Clients_on_conflict {
+  constraint: crudio_Clients_constraint!
+  update_columns: [crudio_Clients_update_column!]! = []
+  where: crudio_Clients_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.Clients"."""
+input crudio_Clients_order_by {
+  Cohort: crudio_Cohorts_order_by
+  CohortId: order_by
+  address: order_by
+  created: order_by
+  deleted: order_by
+  dob: order_by
+  email: order_by
+  firstname: order_by
+  height: order_by
+  id: order_by
+  lastname: order_by
+  weight: order_by
+}
+
+"""primary key columns input for table: crudio_Clients"""
+input crudio_Clients_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.Clients"
+"""
+enum crudio_Clients_select_column {
+  """column name"""
+  CohortId
+
+  """column name"""
+  address
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  dob
+
+  """column name"""
+  email
+
+  """column name"""
+  firstname
+
+  """column name"""
+  height
+
+  """column name"""
+  id
+
+  """column name"""
+  lastname
+
+  """column name"""
+  weight
+}
+
+"""
+input type for updating data in table "crudio.Clients"
+"""
+input crudio_Clients_set_input {
+  CohortId: uuid
+  address: String
+  created: timestamp
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: uuid
+  lastname: String
+  weight: Int
+}
+
+"""aggregate stddev on columns"""
+type crudio_Clients_stddev_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by stddev() on columns of table "crudio.Clients"
+"""
+input crudio_Clients_stddev_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type crudio_Clients_stddev_pop_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by stddev_pop() on columns of table "crudio.Clients"
+"""
+input crudio_Clients_stddev_pop_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type crudio_Clients_stddev_samp_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by stddev_samp() on columns of table "crudio.Clients"
+"""
+input crudio_Clients_stddev_samp_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""aggregate sum on columns"""
+type crudio_Clients_sum_fields {
+  height: Int
+  weight: Int
+}
+
+"""
+order by sum() on columns of table "crudio.Clients"
+"""
+input crudio_Clients_sum_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""
+update columns of table "crudio.Clients"
+"""
+enum crudio_Clients_update_column {
+  """column name"""
+  CohortId
+
+  """column name"""
+  address
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  dob
+
+  """column name"""
+  email
+
+  """column name"""
+  firstname
+
+  """column name"""
+  height
+
+  """column name"""
+  id
+
+  """column name"""
+  lastname
+
+  """column name"""
+  weight
+}
+
+input crudio_Clients_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: crudio_Clients_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_Clients_set_input
+  where: crudio_Clients_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type crudio_Clients_var_pop_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by var_pop() on columns of table "crudio.Clients"
+"""
+input crudio_Clients_var_pop_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""aggregate var_samp on columns"""
+type crudio_Clients_var_samp_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by var_samp() on columns of table "crudio.Clients"
+"""
+input crudio_Clients_var_samp_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""aggregate variance on columns"""
+type crudio_Clients_variance_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by variance() on columns of table "crudio.Clients"
+"""
+input crudio_Clients_variance_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""
+columns and relationships of "crudio.Cohorts"
+"""
+type crudio_Cohorts implements Node {
+  """An array relationship"""
+  Clients(
+    """distinct select on columns"""
+    distinct_on: [crudio_Clients_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Clients_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Clients_bool_exp
+  ): [crudio_Clients!]!
+
+  """An aggregate relationship"""
+  Clients_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_Clients_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Clients_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Clients_bool_exp
+  ): crudio_Clients_aggregate!
+
+  """An array relationship connection"""
+  Clients_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Clients_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Clients_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Clients_bool_exp
+  ): crudio_ClientsConnection!
+
+  """An object relationship"""
+  Program: crudio_Programs
+  ProgramId: uuid
+  created: timestamp!
+  deleted: timestamp
+  id: ID!
+  name: String!
+}
+
+"""
+A Relay connection object on "crudio.Cohorts"
+"""
+type crudio_CohortsConnection {
+  edges: [crudio_CohortsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_CohortsEdge {
+  cursor: String!
+  node: crudio_Cohorts!
+}
+
+"""
+aggregated selection of "crudio.Cohorts"
+"""
+type crudio_Cohorts_aggregate {
+  aggregate: crudio_Cohorts_aggregate_fields
+  nodes: [crudio_Cohorts!]!
+}
+
+"""
+aggregate fields of "crudio.Cohorts"
+"""
+type crudio_Cohorts_aggregate_fields {
+  count(columns: [crudio_Cohorts_select_column!], distinct: Boolean): Int!
+  max: crudio_Cohorts_max_fields
+  min: crudio_Cohorts_min_fields
+}
+
+"""
+order by aggregate values of table "crudio.Cohorts"
+"""
+input crudio_Cohorts_aggregate_order_by {
+  count: order_by
+  max: crudio_Cohorts_max_order_by
+  min: crudio_Cohorts_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "crudio.Cohorts"
+"""
+input crudio_Cohorts_arr_rel_insert_input {
+  data: [crudio_Cohorts_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: crudio_Cohorts_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.Cohorts". All fields are combined with a logical 'AND'.
+"""
+input crudio_Cohorts_bool_exp {
+  Clients: crudio_Clients_bool_exp
+  Program: crudio_Programs_bool_exp
+  ProgramId: uuid_comparison_exp
+  _and: [crudio_Cohorts_bool_exp!]
+  _not: crudio_Cohorts_bool_exp
+  _or: [crudio_Cohorts_bool_exp!]
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.Cohorts"
+"""
+enum crudio_Cohorts_constraint {
+  """
+  unique or primary key constraint on columns "name"
+  """
+  Cohorts_name_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Cohorts_pkey
+}
+
+"""
+input type for inserting data into table "crudio.Cohorts"
+"""
+input crudio_Cohorts_insert_input {
+  Clients: crudio_Clients_arr_rel_insert_input
+  Program: crudio_Programs_obj_rel_insert_input
+  ProgramId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""aggregate max on columns"""
+type crudio_Cohorts_max_fields {
+  ProgramId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+order by max() on columns of table "crudio.Cohorts"
+"""
+input crudio_Cohorts_max_order_by {
+  ProgramId: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  name: order_by
+}
+
+"""aggregate min on columns"""
+type crudio_Cohorts_min_fields {
+  ProgramId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+order by min() on columns of table "crudio.Cohorts"
+"""
+input crudio_Cohorts_min_order_by {
+  ProgramId: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  name: order_by
+}
+
+"""
+response of any mutation on the table "crudio.Cohorts"
+"""
+type crudio_Cohorts_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_Cohorts!]!
+}
+
+"""
+input type for inserting object relation for remote table "crudio.Cohorts"
+"""
+input crudio_Cohorts_obj_rel_insert_input {
+  data: crudio_Cohorts_insert_input!
+
+  """upsert condition"""
+  on_conflict: crudio_Cohorts_on_conflict
+}
+
+"""
+on_conflict condition type for table "crudio.Cohorts"
+"""
+input crudio_Cohorts_on_conflict {
+  constraint: crudio_Cohorts_constraint!
+  update_columns: [crudio_Cohorts_update_column!]! = []
+  where: crudio_Cohorts_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.Cohorts"."""
+input crudio_Cohorts_order_by {
+  Clients_aggregate: crudio_Clients_aggregate_order_by
+  Program: crudio_Programs_order_by
+  ProgramId: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  name: order_by
+}
+
+"""primary key columns input for table: crudio_Cohorts"""
+input crudio_Cohorts_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.Cohorts"
+"""
+enum crudio_Cohorts_select_column {
+  """column name"""
+  ProgramId
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+"""
+input type for updating data in table "crudio.Cohorts"
+"""
+input crudio_Cohorts_set_input {
+  ProgramId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+update columns of table "crudio.Cohorts"
+"""
+enum crudio_Cohorts_update_column {
+  """column name"""
+  ProgramId
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+input crudio_Cohorts_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_Cohorts_set_input
+  where: crudio_Cohorts_bool_exp!
+}
+
+"""
+columns and relationships of "crudio.EmployeeOrganisationRoles"
+"""
+type crudio_EmployeeOrganisationRoles implements Node {
+  """An object relationship"""
+  Employee: crudio_Employees
+  EmployeeId: uuid
+
+  """An object relationship"""
+  OrganisationRole: crudio_OrganisationRoles
+  OrganisationRoleId: uuid
+  id: ID!
+}
+
+"""
+A Relay connection object on "crudio.EmployeeOrganisationRoles"
+"""
+type crudio_EmployeeOrganisationRolesConnection {
+  edges: [crudio_EmployeeOrganisationRolesEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_EmployeeOrganisationRolesEdge {
+  cursor: String!
+  node: crudio_EmployeeOrganisationRoles!
+}
+
+"""
+aggregated selection of "crudio.EmployeeOrganisationRoles"
+"""
+type crudio_EmployeeOrganisationRoles_aggregate {
+  aggregate: crudio_EmployeeOrganisationRoles_aggregate_fields
+  nodes: [crudio_EmployeeOrganisationRoles!]!
+}
+
+"""
+aggregate fields of "crudio.EmployeeOrganisationRoles"
+"""
+type crudio_EmployeeOrganisationRoles_aggregate_fields {
+  count(columns: [crudio_EmployeeOrganisationRoles_select_column!], distinct: Boolean): Int!
+  max: crudio_EmployeeOrganisationRoles_max_fields
+  min: crudio_EmployeeOrganisationRoles_min_fields
+}
+
+"""
+order by aggregate values of table "crudio.EmployeeOrganisationRoles"
+"""
+input crudio_EmployeeOrganisationRoles_aggregate_order_by {
+  count: order_by
+  max: crudio_EmployeeOrganisationRoles_max_order_by
+  min: crudio_EmployeeOrganisationRoles_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "crudio.EmployeeOrganisationRoles"
+"""
+input crudio_EmployeeOrganisationRoles_arr_rel_insert_input {
+  data: [crudio_EmployeeOrganisationRoles_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: crudio_EmployeeOrganisationRoles_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.EmployeeOrganisationRoles". All fields are combined with a logical 'AND'.
+"""
+input crudio_EmployeeOrganisationRoles_bool_exp {
+  Employee: crudio_Employees_bool_exp
+  EmployeeId: uuid_comparison_exp
+  OrganisationRole: crudio_OrganisationRoles_bool_exp
+  OrganisationRoleId: uuid_comparison_exp
+  _and: [crudio_EmployeeOrganisationRoles_bool_exp!]
+  _not: crudio_EmployeeOrganisationRoles_bool_exp
+  _or: [crudio_EmployeeOrganisationRoles_bool_exp!]
+  id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.EmployeeOrganisationRoles"
+"""
+enum crudio_EmployeeOrganisationRoles_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  EmployeeOrganisationRoles_pkey
+}
+
+"""
+input type for inserting data into table "crudio.EmployeeOrganisationRoles"
+"""
+input crudio_EmployeeOrganisationRoles_insert_input {
+  Employee: crudio_Employees_obj_rel_insert_input
+  EmployeeId: uuid
+  OrganisationRole: crudio_OrganisationRoles_obj_rel_insert_input
+  OrganisationRoleId: uuid
+  id: uuid
+}
+
+"""aggregate max on columns"""
+type crudio_EmployeeOrganisationRoles_max_fields {
+  EmployeeId: uuid
+  OrganisationRoleId: uuid
+  id: uuid
+}
+
+"""
+order by max() on columns of table "crudio.EmployeeOrganisationRoles"
+"""
+input crudio_EmployeeOrganisationRoles_max_order_by {
+  EmployeeId: order_by
+  OrganisationRoleId: order_by
+  id: order_by
+}
+
+"""aggregate min on columns"""
+type crudio_EmployeeOrganisationRoles_min_fields {
+  EmployeeId: uuid
+  OrganisationRoleId: uuid
+  id: uuid
+}
+
+"""
+order by min() on columns of table "crudio.EmployeeOrganisationRoles"
+"""
+input crudio_EmployeeOrganisationRoles_min_order_by {
+  EmployeeId: order_by
+  OrganisationRoleId: order_by
+  id: order_by
+}
+
+"""
+response of any mutation on the table "crudio.EmployeeOrganisationRoles"
+"""
+type crudio_EmployeeOrganisationRoles_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_EmployeeOrganisationRoles!]!
+}
+
+"""
+on_conflict condition type for table "crudio.EmployeeOrganisationRoles"
+"""
+input crudio_EmployeeOrganisationRoles_on_conflict {
+  constraint: crudio_EmployeeOrganisationRoles_constraint!
+  update_columns: [crudio_EmployeeOrganisationRoles_update_column!]! = []
+  where: crudio_EmployeeOrganisationRoles_bool_exp
+}
+
+"""
+Ordering options when selecting data from "crudio.EmployeeOrganisationRoles".
+"""
+input crudio_EmployeeOrganisationRoles_order_by {
+  Employee: crudio_Employees_order_by
+  EmployeeId: order_by
+  OrganisationRole: crudio_OrganisationRoles_order_by
+  OrganisationRoleId: order_by
+  id: order_by
+}
+
+"""primary key columns input for table: crudio_EmployeeOrganisationRoles"""
+input crudio_EmployeeOrganisationRoles_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.EmployeeOrganisationRoles"
+"""
+enum crudio_EmployeeOrganisationRoles_select_column {
+  """column name"""
+  EmployeeId
+
+  """column name"""
+  OrganisationRoleId
+
+  """column name"""
+  id
+}
+
+"""
+input type for updating data in table "crudio.EmployeeOrganisationRoles"
+"""
+input crudio_EmployeeOrganisationRoles_set_input {
+  EmployeeId: uuid
+  OrganisationRoleId: uuid
+  id: uuid
+}
+
+"""
+update columns of table "crudio.EmployeeOrganisationRoles"
+"""
+enum crudio_EmployeeOrganisationRoles_update_column {
+  """column name"""
+  EmployeeId
+
+  """column name"""
+  OrganisationRoleId
+
+  """column name"""
+  id
+}
+
+input crudio_EmployeeOrganisationRoles_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_EmployeeOrganisationRoles_set_input
+  where: crudio_EmployeeOrganisationRoles_bool_exp!
+}
+
+"""
+columns and relationships of "crudio.Employees"
+"""
+type crudio_Employees implements Node {
+  """An array relationship"""
+  EmployeeOrganisationRoles(
+    """distinct select on columns"""
+    distinct_on: [crudio_EmployeeOrganisationRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_EmployeeOrganisationRoles_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_EmployeeOrganisationRoles_bool_exp
+  ): [crudio_EmployeeOrganisationRoles!]!
+
+  """An aggregate relationship"""
+  EmployeeOrganisationRoles_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_EmployeeOrganisationRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_EmployeeOrganisationRoles_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_EmployeeOrganisationRoles_bool_exp
+  ): crudio_EmployeeOrganisationRoles_aggregate!
+
+  """An array relationship connection"""
+  EmployeeOrganisationRoles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_EmployeeOrganisationRoles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_EmployeeOrganisationRoles_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_EmployeeOrganisationRoles_bool_exp
+  ): crudio_EmployeeOrganisationRolesConnection!
+
+  """An object relationship"""
+  Organisation: crudio_Organisations
+
+  """An object relationship"""
+  OrganisationDepartment: crudio_OrganisationDepartments
+  OrganisationDepartmentId: uuid
+  OrganisationId: uuid
+  address: String
+  created: timestamp!
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: ID!
+  lastname: String
+  license_expiry: timestamp
+  weight: Int
+}
+
+"""
+A Relay connection object on "crudio.Employees"
+"""
+type crudio_EmployeesConnection {
+  edges: [crudio_EmployeesEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_EmployeesEdge {
+  cursor: String!
+  node: crudio_Employees!
+}
+
+"""
+aggregated selection of "crudio.Employees"
+"""
+type crudio_Employees_aggregate {
+  aggregate: crudio_Employees_aggregate_fields
+  nodes: [crudio_Employees!]!
+}
+
+"""
+aggregate fields of "crudio.Employees"
+"""
+type crudio_Employees_aggregate_fields {
+  avg: crudio_Employees_avg_fields
+  count(columns: [crudio_Employees_select_column!], distinct: Boolean): Int!
+  max: crudio_Employees_max_fields
+  min: crudio_Employees_min_fields
+  stddev: crudio_Employees_stddev_fields
+  stddev_pop: crudio_Employees_stddev_pop_fields
+  stddev_samp: crudio_Employees_stddev_samp_fields
+  sum: crudio_Employees_sum_fields
+  var_pop: crudio_Employees_var_pop_fields
+  var_samp: crudio_Employees_var_samp_fields
+  variance: crudio_Employees_variance_fields
+}
+
+"""
+order by aggregate values of table "crudio.Employees"
+"""
+input crudio_Employees_aggregate_order_by {
+  avg: crudio_Employees_avg_order_by
+  count: order_by
+  max: crudio_Employees_max_order_by
+  min: crudio_Employees_min_order_by
+  stddev: crudio_Employees_stddev_order_by
+  stddev_pop: crudio_Employees_stddev_pop_order_by
+  stddev_samp: crudio_Employees_stddev_samp_order_by
+  sum: crudio_Employees_sum_order_by
+  var_pop: crudio_Employees_var_pop_order_by
+  var_samp: crudio_Employees_var_samp_order_by
+  variance: crudio_Employees_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "crudio.Employees"
+"""
+input crudio_Employees_arr_rel_insert_input {
+  data: [crudio_Employees_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: crudio_Employees_on_conflict
+}
+
+"""aggregate avg on columns"""
+type crudio_Employees_avg_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by avg() on columns of table "crudio.Employees"
+"""
+input crudio_Employees_avg_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.Employees". All fields are combined with a logical 'AND'.
+"""
+input crudio_Employees_bool_exp {
+  EmployeeOrganisationRoles: crudio_EmployeeOrganisationRoles_bool_exp
+  Organisation: crudio_Organisations_bool_exp
+  OrganisationDepartment: crudio_OrganisationDepartments_bool_exp
+  OrganisationDepartmentId: uuid_comparison_exp
+  OrganisationId: uuid_comparison_exp
+  _and: [crudio_Employees_bool_exp!]
+  _not: crudio_Employees_bool_exp
+  _or: [crudio_Employees_bool_exp!]
+  address: String_comparison_exp
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  dob: timestamp_comparison_exp
+  email: String_comparison_exp
+  firstname: String_comparison_exp
+  height: Int_comparison_exp
+  id: uuid_comparison_exp
+  lastname: String_comparison_exp
+  license_expiry: timestamp_comparison_exp
+  weight: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.Employees"
+"""
+enum crudio_Employees_constraint {
+  """
+  unique or primary key constraint on columns "email"
+  """
+  Employees_email_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Employees_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "crudio.Employees"
+"""
+input crudio_Employees_inc_input {
+  height: Int
+  weight: Int
+}
+
+"""
+input type for inserting data into table "crudio.Employees"
+"""
+input crudio_Employees_insert_input {
+  EmployeeOrganisationRoles: crudio_EmployeeOrganisationRoles_arr_rel_insert_input
+  Organisation: crudio_Organisations_obj_rel_insert_input
+  OrganisationDepartment: crudio_OrganisationDepartments_obj_rel_insert_input
+  OrganisationDepartmentId: uuid
+  OrganisationId: uuid
+  address: String
+  created: timestamp
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: uuid
+  lastname: String
+  license_expiry: timestamp
+  weight: Int
+}
+
+"""aggregate max on columns"""
+type crudio_Employees_max_fields {
+  OrganisationDepartmentId: uuid
+  OrganisationId: uuid
+  address: String
+  created: timestamp
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: uuid
+  lastname: String
+  license_expiry: timestamp
+  weight: Int
+}
+
+"""
+order by max() on columns of table "crudio.Employees"
+"""
+input crudio_Employees_max_order_by {
+  OrganisationDepartmentId: order_by
+  OrganisationId: order_by
+  address: order_by
+  created: order_by
+  deleted: order_by
+  dob: order_by
+  email: order_by
+  firstname: order_by
+  height: order_by
+  id: order_by
+  lastname: order_by
+  license_expiry: order_by
+  weight: order_by
+}
+
+"""aggregate min on columns"""
+type crudio_Employees_min_fields {
+  OrganisationDepartmentId: uuid
+  OrganisationId: uuid
+  address: String
+  created: timestamp
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: uuid
+  lastname: String
+  license_expiry: timestamp
+  weight: Int
+}
+
+"""
+order by min() on columns of table "crudio.Employees"
+"""
+input crudio_Employees_min_order_by {
+  OrganisationDepartmentId: order_by
+  OrganisationId: order_by
+  address: order_by
+  created: order_by
+  deleted: order_by
+  dob: order_by
+  email: order_by
+  firstname: order_by
+  height: order_by
+  id: order_by
+  lastname: order_by
+  license_expiry: order_by
+  weight: order_by
+}
+
+"""
+response of any mutation on the table "crudio.Employees"
+"""
+type crudio_Employees_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_Employees!]!
+}
+
+"""
+input type for inserting object relation for remote table "crudio.Employees"
+"""
+input crudio_Employees_obj_rel_insert_input {
+  data: crudio_Employees_insert_input!
+
+  """upsert condition"""
+  on_conflict: crudio_Employees_on_conflict
+}
+
+"""
+on_conflict condition type for table "crudio.Employees"
+"""
+input crudio_Employees_on_conflict {
+  constraint: crudio_Employees_constraint!
+  update_columns: [crudio_Employees_update_column!]! = []
+  where: crudio_Employees_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.Employees"."""
+input crudio_Employees_order_by {
+  EmployeeOrganisationRoles_aggregate: crudio_EmployeeOrganisationRoles_aggregate_order_by
+  Organisation: crudio_Organisations_order_by
+  OrganisationDepartment: crudio_OrganisationDepartments_order_by
+  OrganisationDepartmentId: order_by
+  OrganisationId: order_by
+  address: order_by
+  created: order_by
+  deleted: order_by
+  dob: order_by
+  email: order_by
+  firstname: order_by
+  height: order_by
+  id: order_by
+  lastname: order_by
+  license_expiry: order_by
+  weight: order_by
+}
+
+"""primary key columns input for table: crudio_Employees"""
+input crudio_Employees_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.Employees"
+"""
+enum crudio_Employees_select_column {
+  """column name"""
+  OrganisationDepartmentId
+
+  """column name"""
+  OrganisationId
+
+  """column name"""
+  address
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  dob
+
+  """column name"""
+  email
+
+  """column name"""
+  firstname
+
+  """column name"""
+  height
+
+  """column name"""
+  id
+
+  """column name"""
+  lastname
+
+  """column name"""
+  license_expiry
+
+  """column name"""
+  weight
+}
+
+"""
+input type for updating data in table "crudio.Employees"
+"""
+input crudio_Employees_set_input {
+  OrganisationDepartmentId: uuid
+  OrganisationId: uuid
+  address: String
+  created: timestamp
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: uuid
+  lastname: String
+  license_expiry: timestamp
+  weight: Int
+}
+
+"""aggregate stddev on columns"""
+type crudio_Employees_stddev_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by stddev() on columns of table "crudio.Employees"
+"""
+input crudio_Employees_stddev_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type crudio_Employees_stddev_pop_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by stddev_pop() on columns of table "crudio.Employees"
+"""
+input crudio_Employees_stddev_pop_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type crudio_Employees_stddev_samp_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by stddev_samp() on columns of table "crudio.Employees"
+"""
+input crudio_Employees_stddev_samp_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""aggregate sum on columns"""
+type crudio_Employees_sum_fields {
+  height: Int
+  weight: Int
+}
+
+"""
+order by sum() on columns of table "crudio.Employees"
+"""
+input crudio_Employees_sum_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""
+update columns of table "crudio.Employees"
+"""
+enum crudio_Employees_update_column {
+  """column name"""
+  OrganisationDepartmentId
+
+  """column name"""
+  OrganisationId
+
+  """column name"""
+  address
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  dob
+
+  """column name"""
+  email
+
+  """column name"""
+  firstname
+
+  """column name"""
+  height
+
+  """column name"""
+  id
+
+  """column name"""
+  lastname
+
+  """column name"""
+  license_expiry
+
+  """column name"""
+  weight
+}
+
+input crudio_Employees_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: crudio_Employees_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_Employees_set_input
+  where: crudio_Employees_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type crudio_Employees_var_pop_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by var_pop() on columns of table "crudio.Employees"
+"""
+input crudio_Employees_var_pop_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""aggregate var_samp on columns"""
+type crudio_Employees_var_samp_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by var_samp() on columns of table "crudio.Employees"
+"""
+input crudio_Employees_var_samp_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""aggregate variance on columns"""
+type crudio_Employees_variance_fields {
+  height: Float
+  weight: Float
+}
+
+"""
+order by variance() on columns of table "crudio.Employees"
+"""
+input crudio_Employees_variance_order_by {
+  height: order_by
+  weight: order_by
+}
+
+"""
+columns and relationships of "crudio.OrganisationDepartments"
+"""
+type crudio_OrganisationDepartments implements Node {
+  """An array relationship"""
+  Employees(
+    """distinct select on columns"""
+    distinct_on: [crudio_Employees_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Employees_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Employees_bool_exp
+  ): [crudio_Employees!]!
+
+  """An aggregate relationship"""
+  Employees_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_Employees_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Employees_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Employees_bool_exp
+  ): crudio_Employees_aggregate!
+
+  """An array relationship connection"""
+  Employees_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Employees_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Employees_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Employees_bool_exp
+  ): crudio_EmployeesConnection!
+  created: timestamp!
+  deleted: timestamp
+  id: ID!
+  name: String!
+}
+
+"""
+A Relay connection object on "crudio.OrganisationDepartments"
+"""
+type crudio_OrganisationDepartmentsConnection {
+  edges: [crudio_OrganisationDepartmentsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_OrganisationDepartmentsEdge {
+  cursor: String!
+  node: crudio_OrganisationDepartments!
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.OrganisationDepartments". All fields are combined with a logical 'AND'.
+"""
+input crudio_OrganisationDepartments_bool_exp {
+  Employees: crudio_Employees_bool_exp
+  _and: [crudio_OrganisationDepartments_bool_exp!]
+  _not: crudio_OrganisationDepartments_bool_exp
+  _or: [crudio_OrganisationDepartments_bool_exp!]
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.OrganisationDepartments"
+"""
+enum crudio_OrganisationDepartments_constraint {
+  """
+  unique or primary key constraint on columns "name"
+  """
+  OrganisationDepartments_name_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  OrganisationDepartments_pkey
+}
+
+"""
+input type for inserting data into table "crudio.OrganisationDepartments"
+"""
+input crudio_OrganisationDepartments_insert_input {
+  Employees: crudio_Employees_arr_rel_insert_input
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+response of any mutation on the table "crudio.OrganisationDepartments"
+"""
+type crudio_OrganisationDepartments_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_OrganisationDepartments!]!
+}
+
+"""
+input type for inserting object relation for remote table "crudio.OrganisationDepartments"
+"""
+input crudio_OrganisationDepartments_obj_rel_insert_input {
+  data: crudio_OrganisationDepartments_insert_input!
+
+  """upsert condition"""
+  on_conflict: crudio_OrganisationDepartments_on_conflict
+}
+
+"""
+on_conflict condition type for table "crudio.OrganisationDepartments"
+"""
+input crudio_OrganisationDepartments_on_conflict {
+  constraint: crudio_OrganisationDepartments_constraint!
+  update_columns: [crudio_OrganisationDepartments_update_column!]! = []
+  where: crudio_OrganisationDepartments_bool_exp
+}
+
+"""
+Ordering options when selecting data from "crudio.OrganisationDepartments".
+"""
+input crudio_OrganisationDepartments_order_by {
+  Employees_aggregate: crudio_Employees_aggregate_order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  name: order_by
+}
+
+"""primary key columns input for table: crudio_OrganisationDepartments"""
+input crudio_OrganisationDepartments_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.OrganisationDepartments"
+"""
+enum crudio_OrganisationDepartments_select_column {
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+"""
+input type for updating data in table "crudio.OrganisationDepartments"
+"""
+input crudio_OrganisationDepartments_set_input {
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+update columns of table "crudio.OrganisationDepartments"
+"""
+enum crudio_OrganisationDepartments_update_column {
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+input crudio_OrganisationDepartments_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_OrganisationDepartments_set_input
+  where: crudio_OrganisationDepartments_bool_exp!
+}
+
+"""
+columns and relationships of "crudio.OrganisationRoles"
+"""
+type crudio_OrganisationRoles implements Node {
+  """An array relationship"""
+  EmployeeOrganisationRoles(
+    """distinct select on columns"""
+    distinct_on: [crudio_EmployeeOrganisationRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_EmployeeOrganisationRoles_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_EmployeeOrganisationRoles_bool_exp
+  ): [crudio_EmployeeOrganisationRoles!]!
+
+  """An aggregate relationship"""
+  EmployeeOrganisationRoles_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_EmployeeOrganisationRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_EmployeeOrganisationRoles_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_EmployeeOrganisationRoles_bool_exp
+  ): crudio_EmployeeOrganisationRoles_aggregate!
+
+  """An array relationship connection"""
+  EmployeeOrganisationRoles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_EmployeeOrganisationRoles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_EmployeeOrganisationRoles_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_EmployeeOrganisationRoles_bool_exp
+  ): crudio_EmployeeOrganisationRolesConnection!
+  created: timestamp!
+  deleted: timestamp
+  id: ID!
+  name: String!
+}
+
+"""
+A Relay connection object on "crudio.OrganisationRoles"
+"""
+type crudio_OrganisationRolesConnection {
+  edges: [crudio_OrganisationRolesEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_OrganisationRolesEdge {
+  cursor: String!
+  node: crudio_OrganisationRoles!
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.OrganisationRoles". All fields are combined with a logical 'AND'.
+"""
+input crudio_OrganisationRoles_bool_exp {
+  EmployeeOrganisationRoles: crudio_EmployeeOrganisationRoles_bool_exp
+  _and: [crudio_OrganisationRoles_bool_exp!]
+  _not: crudio_OrganisationRoles_bool_exp
+  _or: [crudio_OrganisationRoles_bool_exp!]
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.OrganisationRoles"
+"""
+enum crudio_OrganisationRoles_constraint {
+  """
+  unique or primary key constraint on columns "name"
+  """
+  OrganisationRoles_name_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  OrganisationRoles_pkey
+}
+
+"""
+input type for inserting data into table "crudio.OrganisationRoles"
+"""
+input crudio_OrganisationRoles_insert_input {
+  EmployeeOrganisationRoles: crudio_EmployeeOrganisationRoles_arr_rel_insert_input
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+response of any mutation on the table "crudio.OrganisationRoles"
+"""
+type crudio_OrganisationRoles_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_OrganisationRoles!]!
+}
+
+"""
+input type for inserting object relation for remote table "crudio.OrganisationRoles"
+"""
+input crudio_OrganisationRoles_obj_rel_insert_input {
+  data: crudio_OrganisationRoles_insert_input!
+
+  """upsert condition"""
+  on_conflict: crudio_OrganisationRoles_on_conflict
+}
+
+"""
+on_conflict condition type for table "crudio.OrganisationRoles"
+"""
+input crudio_OrganisationRoles_on_conflict {
+  constraint: crudio_OrganisationRoles_constraint!
+  update_columns: [crudio_OrganisationRoles_update_column!]! = []
+  where: crudio_OrganisationRoles_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.OrganisationRoles"."""
+input crudio_OrganisationRoles_order_by {
+  EmployeeOrganisationRoles_aggregate: crudio_EmployeeOrganisationRoles_aggregate_order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  name: order_by
+}
+
+"""primary key columns input for table: crudio_OrganisationRoles"""
+input crudio_OrganisationRoles_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.OrganisationRoles"
+"""
+enum crudio_OrganisationRoles_select_column {
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+"""
+input type for updating data in table "crudio.OrganisationRoles"
+"""
+input crudio_OrganisationRoles_set_input {
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+update columns of table "crudio.OrganisationRoles"
+"""
+enum crudio_OrganisationRoles_update_column {
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+input crudio_OrganisationRoles_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_OrganisationRoles_set_input
+  where: crudio_OrganisationRoles_bool_exp!
+}
+
+"""
+columns and relationships of "crudio.Organisations"
+"""
+type crudio_Organisations implements Node {
+  """An array relationship"""
+  Employees(
+    """distinct select on columns"""
+    distinct_on: [crudio_Employees_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Employees_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Employees_bool_exp
+  ): [crudio_Employees!]!
+
+  """An aggregate relationship"""
+  Employees_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_Employees_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Employees_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Employees_bool_exp
+  ): crudio_Employees_aggregate!
+
+  """An array relationship connection"""
+  Employees_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Employees_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Employees_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Employees_bool_exp
+  ): crudio_EmployeesConnection!
+
+  """An array relationship"""
+  Programs(
+    """distinct select on columns"""
+    distinct_on: [crudio_Programs_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Programs_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Programs_bool_exp
+  ): [crudio_Programs!]!
+
+  """An aggregate relationship"""
+  Programs_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_Programs_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Programs_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Programs_bool_exp
+  ): crudio_Programs_aggregate!
+
+  """An array relationship connection"""
+  Programs_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Programs_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Programs_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Programs_bool_exp
+  ): crudio_ProgramsConnection!
+  accreditation_expiry: timestamp
+  address: String
+  created: timestamp!
+  deleted: timestamp
+  email: String
+  id: ID!
+  name: String!
+}
+
+"""
+A Relay connection object on "crudio.Organisations"
+"""
+type crudio_OrganisationsConnection {
+  edges: [crudio_OrganisationsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_OrganisationsEdge {
+  cursor: String!
+  node: crudio_Organisations!
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.Organisations". All fields are combined with a logical 'AND'.
+"""
+input crudio_Organisations_bool_exp {
+  Employees: crudio_Employees_bool_exp
+  Programs: crudio_Programs_bool_exp
+  _and: [crudio_Organisations_bool_exp!]
+  _not: crudio_Organisations_bool_exp
+  _or: [crudio_Organisations_bool_exp!]
+  accreditation_expiry: timestamp_comparison_exp
+  address: String_comparison_exp
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  email: String_comparison_exp
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.Organisations"
+"""
+enum crudio_Organisations_constraint {
+  """
+  unique or primary key constraint on columns "name"
+  """
+  Organisations_name_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Organisations_pkey
+}
+
+"""
+input type for inserting data into table "crudio.Organisations"
+"""
+input crudio_Organisations_insert_input {
+  Employees: crudio_Employees_arr_rel_insert_input
+  Programs: crudio_Programs_arr_rel_insert_input
+  accreditation_expiry: timestamp
+  address: String
+  created: timestamp
+  deleted: timestamp
+  email: String
+  id: uuid
+  name: String
+}
+
+"""
+response of any mutation on the table "crudio.Organisations"
+"""
+type crudio_Organisations_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_Organisations!]!
+}
+
+"""
+input type for inserting object relation for remote table "crudio.Organisations"
+"""
+input crudio_Organisations_obj_rel_insert_input {
+  data: crudio_Organisations_insert_input!
+
+  """upsert condition"""
+  on_conflict: crudio_Organisations_on_conflict
+}
+
+"""
+on_conflict condition type for table "crudio.Organisations"
+"""
+input crudio_Organisations_on_conflict {
+  constraint: crudio_Organisations_constraint!
+  update_columns: [crudio_Organisations_update_column!]! = []
+  where: crudio_Organisations_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.Organisations"."""
+input crudio_Organisations_order_by {
+  Employees_aggregate: crudio_Employees_aggregate_order_by
+  Programs_aggregate: crudio_Programs_aggregate_order_by
+  accreditation_expiry: order_by
+  address: order_by
+  created: order_by
+  deleted: order_by
+  email: order_by
+  id: order_by
+  name: order_by
+}
+
+"""primary key columns input for table: crudio_Organisations"""
+input crudio_Organisations_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.Organisations"
+"""
+enum crudio_Organisations_select_column {
+  """column name"""
+  accreditation_expiry
+
+  """column name"""
+  address
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+"""
+input type for updating data in table "crudio.Organisations"
+"""
+input crudio_Organisations_set_input {
+  accreditation_expiry: timestamp
+  address: String
+  created: timestamp
+  deleted: timestamp
+  email: String
+  id: uuid
+  name: String
+}
+
+"""
+update columns of table "crudio.Organisations"
+"""
+enum crudio_Organisations_update_column {
+  """column name"""
+  accreditation_expiry
+
+  """column name"""
+  address
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+input crudio_Organisations_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_Organisations_set_input
+  where: crudio_Organisations_bool_exp!
+}
+
+"""
+columns and relationships of "crudio.Programs"
+"""
+type crudio_Programs implements Node {
+  """An array relationship"""
+  Cohorts(
+    """distinct select on columns"""
+    distinct_on: [crudio_Cohorts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Cohorts_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Cohorts_bool_exp
+  ): [crudio_Cohorts!]!
+
+  """An aggregate relationship"""
+  Cohorts_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_Cohorts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Cohorts_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Cohorts_bool_exp
+  ): crudio_Cohorts_aggregate!
+
+  """An array relationship connection"""
+  Cohorts_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Cohorts_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Cohorts_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Cohorts_bool_exp
+  ): crudio_CohortsConnection!
+
+  """An object relationship"""
+  Organisation: crudio_Organisations
+  OrganisationId: uuid
+
+  """An array relationship"""
+  Surveys(
+    """distinct select on columns"""
+    distinct_on: [crudio_Surveys_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Surveys_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Surveys_bool_exp
+  ): [crudio_Surveys!]!
+
+  """An aggregate relationship"""
+  Surveys_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_Surveys_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Surveys_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Surveys_bool_exp
+  ): crudio_Surveys_aggregate!
+
+  """An array relationship connection"""
+  Surveys_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Surveys_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Surveys_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Surveys_bool_exp
+  ): crudio_SurveysConnection!
+  created: timestamp!
+  deleted: timestamp
+  id: ID!
+  mission: String
+  name: String!
+}
+
+"""
+A Relay connection object on "crudio.Programs"
+"""
+type crudio_ProgramsConnection {
+  edges: [crudio_ProgramsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_ProgramsEdge {
+  cursor: String!
+  node: crudio_Programs!
+}
+
+"""
+aggregated selection of "crudio.Programs"
+"""
+type crudio_Programs_aggregate {
+  aggregate: crudio_Programs_aggregate_fields
+  nodes: [crudio_Programs!]!
+}
+
+"""
+aggregate fields of "crudio.Programs"
+"""
+type crudio_Programs_aggregate_fields {
+  count(columns: [crudio_Programs_select_column!], distinct: Boolean): Int!
+  max: crudio_Programs_max_fields
+  min: crudio_Programs_min_fields
+}
+
+"""
+order by aggregate values of table "crudio.Programs"
+"""
+input crudio_Programs_aggregate_order_by {
+  count: order_by
+  max: crudio_Programs_max_order_by
+  min: crudio_Programs_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "crudio.Programs"
+"""
+input crudio_Programs_arr_rel_insert_input {
+  data: [crudio_Programs_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: crudio_Programs_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.Programs". All fields are combined with a logical 'AND'.
+"""
+input crudio_Programs_bool_exp {
+  Cohorts: crudio_Cohorts_bool_exp
+  Organisation: crudio_Organisations_bool_exp
+  OrganisationId: uuid_comparison_exp
+  Surveys: crudio_Surveys_bool_exp
+  _and: [crudio_Programs_bool_exp!]
+  _not: crudio_Programs_bool_exp
+  _or: [crudio_Programs_bool_exp!]
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  mission: String_comparison_exp
+  name: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.Programs"
+"""
+enum crudio_Programs_constraint {
+  """
+  unique or primary key constraint on columns "name"
+  """
+  Programs_name_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Programs_pkey
+}
+
+"""
+input type for inserting data into table "crudio.Programs"
+"""
+input crudio_Programs_insert_input {
+  Cohorts: crudio_Cohorts_arr_rel_insert_input
+  Organisation: crudio_Organisations_obj_rel_insert_input
+  OrganisationId: uuid
+  Surveys: crudio_Surveys_arr_rel_insert_input
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  mission: String
+  name: String
+}
+
+"""aggregate max on columns"""
+type crudio_Programs_max_fields {
+  OrganisationId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  mission: String
+  name: String
+}
+
+"""
+order by max() on columns of table "crudio.Programs"
+"""
+input crudio_Programs_max_order_by {
+  OrganisationId: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  mission: order_by
+  name: order_by
+}
+
+"""aggregate min on columns"""
+type crudio_Programs_min_fields {
+  OrganisationId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  mission: String
+  name: String
+}
+
+"""
+order by min() on columns of table "crudio.Programs"
+"""
+input crudio_Programs_min_order_by {
+  OrganisationId: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  mission: order_by
+  name: order_by
+}
+
+"""
+response of any mutation on the table "crudio.Programs"
+"""
+type crudio_Programs_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_Programs!]!
+}
+
+"""
+input type for inserting object relation for remote table "crudio.Programs"
+"""
+input crudio_Programs_obj_rel_insert_input {
+  data: crudio_Programs_insert_input!
+
+  """upsert condition"""
+  on_conflict: crudio_Programs_on_conflict
+}
+
+"""
+on_conflict condition type for table "crudio.Programs"
+"""
+input crudio_Programs_on_conflict {
+  constraint: crudio_Programs_constraint!
+  update_columns: [crudio_Programs_update_column!]! = []
+  where: crudio_Programs_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.Programs"."""
+input crudio_Programs_order_by {
+  Cohorts_aggregate: crudio_Cohorts_aggregate_order_by
+  Organisation: crudio_Organisations_order_by
+  OrganisationId: order_by
+  Surveys_aggregate: crudio_Surveys_aggregate_order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  mission: order_by
+  name: order_by
+}
+
+"""primary key columns input for table: crudio_Programs"""
+input crudio_Programs_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.Programs"
+"""
+enum crudio_Programs_select_column {
+  """column name"""
+  OrganisationId
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  mission
+
+  """column name"""
+  name
+}
+
+"""
+input type for updating data in table "crudio.Programs"
+"""
+input crudio_Programs_set_input {
+  OrganisationId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  mission: String
+  name: String
+}
+
+"""
+update columns of table "crudio.Programs"
+"""
+enum crudio_Programs_update_column {
+  """column name"""
+  OrganisationId
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  mission
+
+  """column name"""
+  name
+}
+
+input crudio_Programs_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_Programs_set_input
+  where: crudio_Programs_bool_exp!
+}
+
+"""
+columns and relationships of "crudio.Surveys"
+"""
+type crudio_Surveys implements Node {
+  """An object relationship"""
+  Program: crudio_Programs
+  ProgramId: uuid
+  created: timestamp!
+  deleted: timestamp
+  id: ID!
+  name: String!
+}
+
+"""
+A Relay connection object on "crudio.Surveys"
+"""
+type crudio_SurveysConnection {
+  edges: [crudio_SurveysEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_SurveysEdge {
+  cursor: String!
+  node: crudio_Surveys!
+}
+
+"""
+aggregated selection of "crudio.Surveys"
+"""
+type crudio_Surveys_aggregate {
+  aggregate: crudio_Surveys_aggregate_fields
+  nodes: [crudio_Surveys!]!
+}
+
+"""
+aggregate fields of "crudio.Surveys"
+"""
+type crudio_Surveys_aggregate_fields {
+  count(columns: [crudio_Surveys_select_column!], distinct: Boolean): Int!
+  max: crudio_Surveys_max_fields
+  min: crudio_Surveys_min_fields
+}
+
+"""
+order by aggregate values of table "crudio.Surveys"
+"""
+input crudio_Surveys_aggregate_order_by {
+  count: order_by
+  max: crudio_Surveys_max_order_by
+  min: crudio_Surveys_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "crudio.Surveys"
+"""
+input crudio_Surveys_arr_rel_insert_input {
+  data: [crudio_Surveys_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: crudio_Surveys_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.Surveys". All fields are combined with a logical 'AND'.
+"""
+input crudio_Surveys_bool_exp {
+  Program: crudio_Programs_bool_exp
+  ProgramId: uuid_comparison_exp
+  _and: [crudio_Surveys_bool_exp!]
+  _not: crudio_Surveys_bool_exp
+  _or: [crudio_Surveys_bool_exp!]
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.Surveys"
+"""
+enum crudio_Surveys_constraint {
+  """
+  unique or primary key constraint on columns "name"
+  """
+  Surveys_name_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Surveys_pkey
+}
+
+"""
+input type for inserting data into table "crudio.Surveys"
+"""
+input crudio_Surveys_insert_input {
+  Program: crudio_Programs_obj_rel_insert_input
+  ProgramId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""aggregate max on columns"""
+type crudio_Surveys_max_fields {
+  ProgramId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+order by max() on columns of table "crudio.Surveys"
+"""
+input crudio_Surveys_max_order_by {
+  ProgramId: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  name: order_by
+}
+
+"""aggregate min on columns"""
+type crudio_Surveys_min_fields {
+  ProgramId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+order by min() on columns of table "crudio.Surveys"
+"""
+input crudio_Surveys_min_order_by {
+  ProgramId: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  name: order_by
+}
+
+"""
+response of any mutation on the table "crudio.Surveys"
+"""
+type crudio_Surveys_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_Surveys!]!
+}
+
+"""
+on_conflict condition type for table "crudio.Surveys"
+"""
+input crudio_Surveys_on_conflict {
+  constraint: crudio_Surveys_constraint!
+  update_columns: [crudio_Surveys_update_column!]! = []
+  where: crudio_Surveys_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.Surveys"."""
+input crudio_Surveys_order_by {
+  Program: crudio_Programs_order_by
+  ProgramId: order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  name: order_by
+}
+
+"""primary key columns input for table: crudio_Surveys"""
+input crudio_Surveys_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.Surveys"
+"""
+enum crudio_Surveys_select_column {
+  """column name"""
+  ProgramId
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+"""
+input type for updating data in table "crudio.Surveys"
+"""
+input crudio_Surveys_set_input {
+  ProgramId: uuid
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+update columns of table "crudio.Surveys"
+"""
+enum crudio_Surveys_update_column {
+  """column name"""
+  ProgramId
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+input crudio_Surveys_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_Surveys_set_input
+  where: crudio_Surveys_bool_exp!
+}
+
+"""
+columns and relationships of "crudio.Tags"
+"""
+type crudio_Tags implements Node {
+  """An array relationship"""
+  BlogTags(
+    """distinct select on columns"""
+    distinct_on: [crudio_BlogTags_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_BlogTags_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_BlogTags_bool_exp
+  ): [crudio_BlogTags!]!
+
+  """An aggregate relationship"""
+  BlogTags_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_BlogTags_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_BlogTags_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_BlogTags_bool_exp
+  ): crudio_BlogTags_aggregate!
+
+  """An array relationship connection"""
+  BlogTags_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_BlogTags_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_BlogTags_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_BlogTags_bool_exp
+  ): crudio_BlogTagsConnection!
+  created: timestamp!
+  deleted: timestamp
+  id: ID!
+  name: String!
+}
+
+"""
+A Relay connection object on "crudio.Tags"
+"""
+type crudio_TagsConnection {
+  edges: [crudio_TagsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_TagsEdge {
+  cursor: String!
+  node: crudio_Tags!
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.Tags". All fields are combined with a logical 'AND'.
+"""
+input crudio_Tags_bool_exp {
+  BlogTags: crudio_BlogTags_bool_exp
+  _and: [crudio_Tags_bool_exp!]
+  _not: crudio_Tags_bool_exp
+  _or: [crudio_Tags_bool_exp!]
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.Tags"
+"""
+enum crudio_Tags_constraint {
+  """
+  unique or primary key constraint on columns "name"
+  """
+  Tags_name_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Tags_pkey
+}
+
+"""
+input type for inserting data into table "crudio.Tags"
+"""
+input crudio_Tags_insert_input {
+  BlogTags: crudio_BlogTags_arr_rel_insert_input
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+response of any mutation on the table "crudio.Tags"
+"""
+type crudio_Tags_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_Tags!]!
+}
+
+"""
+input type for inserting object relation for remote table "crudio.Tags"
+"""
+input crudio_Tags_obj_rel_insert_input {
+  data: crudio_Tags_insert_input!
+
+  """upsert condition"""
+  on_conflict: crudio_Tags_on_conflict
+}
+
+"""
+on_conflict condition type for table "crudio.Tags"
+"""
+input crudio_Tags_on_conflict {
+  constraint: crudio_Tags_constraint!
+  update_columns: [crudio_Tags_update_column!]! = []
+  where: crudio_Tags_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.Tags"."""
+input crudio_Tags_order_by {
+  BlogTags_aggregate: crudio_BlogTags_aggregate_order_by
+  created: order_by
+  deleted: order_by
+  id: order_by
+  name: order_by
+}
+
+"""primary key columns input for table: crudio_Tags"""
+input crudio_Tags_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.Tags"
+"""
+enum crudio_Tags_select_column {
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+"""
+input type for updating data in table "crudio.Tags"
+"""
+input crudio_Tags_set_input {
+  created: timestamp
+  deleted: timestamp
+  id: uuid
+  name: String
+}
+
+"""
+update columns of table "crudio.Tags"
+"""
+enum crudio_Tags_update_column {
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+input crudio_Tags_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_Tags_set_input
+  where: crudio_Tags_bool_exp!
+}
+
+"""
+columns and relationships of "crudio.Users"
+"""
+type crudio_Users implements Node {
+  """An array relationship"""
+  Blogs(
+    """distinct select on columns"""
+    distinct_on: [crudio_Blogs_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Blogs_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Blogs_bool_exp
+  ): [crudio_Blogs!]!
+
+  """An aggregate relationship"""
+  Blogs_aggregate(
+    """distinct select on columns"""
+    distinct_on: [crudio_Blogs_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Blogs_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Blogs_bool_exp
+  ): crudio_Blogs_aggregate!
+
+  """An array relationship connection"""
+  Blogs_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Blogs_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Blogs_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Blogs_bool_exp
+  ): crudio_BlogsConnection!
+  address: String
+  created: timestamp!
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: ID!
+  lastname: String
+  weight: Int
+}
+
+"""
+A Relay connection object on "crudio.Users"
+"""
+type crudio_UsersConnection {
+  edges: [crudio_UsersEdge!]!
+  pageInfo: PageInfo!
+}
+
+type crudio_UsersEdge {
+  cursor: String!
+  node: crudio_Users!
+}
+
+"""
+Boolean expression to filter rows from the table "crudio.Users". All fields are combined with a logical 'AND'.
+"""
+input crudio_Users_bool_exp {
+  Blogs: crudio_Blogs_bool_exp
+  _and: [crudio_Users_bool_exp!]
+  _not: crudio_Users_bool_exp
+  _or: [crudio_Users_bool_exp!]
+  address: String_comparison_exp
+  created: timestamp_comparison_exp
+  deleted: timestamp_comparison_exp
+  dob: timestamp_comparison_exp
+  email: String_comparison_exp
+  firstname: String_comparison_exp
+  height: Int_comparison_exp
+  id: uuid_comparison_exp
+  lastname: String_comparison_exp
+  weight: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "crudio.Users"
+"""
+enum crudio_Users_constraint {
+  """
+  unique or primary key constraint on columns "email"
+  """
+  Users_email_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  Users_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "crudio.Users"
+"""
+input crudio_Users_inc_input {
+  height: Int
+  weight: Int
+}
+
+"""
+input type for inserting data into table "crudio.Users"
+"""
+input crudio_Users_insert_input {
+  Blogs: crudio_Blogs_arr_rel_insert_input
+  address: String
+  created: timestamp
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: uuid
+  lastname: String
+  weight: Int
+}
+
+"""
+response of any mutation on the table "crudio.Users"
+"""
+type crudio_Users_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [crudio_Users!]!
+}
+
+"""
+input type for inserting object relation for remote table "crudio.Users"
+"""
+input crudio_Users_obj_rel_insert_input {
+  data: crudio_Users_insert_input!
+
+  """upsert condition"""
+  on_conflict: crudio_Users_on_conflict
+}
+
+"""
+on_conflict condition type for table "crudio.Users"
+"""
+input crudio_Users_on_conflict {
+  constraint: crudio_Users_constraint!
+  update_columns: [crudio_Users_update_column!]! = []
+  where: crudio_Users_bool_exp
+}
+
+"""Ordering options when selecting data from "crudio.Users"."""
+input crudio_Users_order_by {
+  Blogs_aggregate: crudio_Blogs_aggregate_order_by
+  address: order_by
+  created: order_by
+  deleted: order_by
+  dob: order_by
+  email: order_by
+  firstname: order_by
+  height: order_by
+  id: order_by
+  lastname: order_by
+  weight: order_by
+}
+
+"""primary key columns input for table: crudio_Users"""
+input crudio_Users_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "crudio.Users"
+"""
+enum crudio_Users_select_column {
+  """column name"""
+  address
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  dob
+
+  """column name"""
+  email
+
+  """column name"""
+  firstname
+
+  """column name"""
+  height
+
+  """column name"""
+  id
+
+  """column name"""
+  lastname
+
+  """column name"""
+  weight
+}
+
+"""
+input type for updating data in table "crudio.Users"
+"""
+input crudio_Users_set_input {
+  address: String
+  created: timestamp
+  deleted: timestamp
+  dob: timestamp
+  email: String
+  firstname: String
+  height: Int
+  id: uuid
+  lastname: String
+  weight: Int
+}
+
+"""
+update columns of table "crudio.Users"
+"""
+enum crudio_Users_update_column {
+  """column name"""
+  address
+
+  """column name"""
+  created
+
+  """column name"""
+  deleted
+
+  """column name"""
+  dob
+
+  """column name"""
+  email
+
+  """column name"""
+  firstname
+
+  """column name"""
+  height
+
+  """column name"""
+  id
+
+  """column name"""
+  lastname
+
+  """column name"""
+  weight
+}
+
+input crudio_Users_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: crudio_Users_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: crudio_Users_set_input
+  where: crudio_Users_bool_exp!
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "crudio.BlogTags"
+  """
+  delete_crudio_BlogTags(
+    """filter the rows which have to be deleted"""
+    where: crudio_BlogTags_bool_exp!
+  ): crudio_BlogTags_mutation_response
+
+  """
+  delete single row from the table: "crudio.BlogTags"
+  """
+  delete_crudio_BlogTags_by_pk(id: uuid!): crudio_BlogTags
+
+  """
+  delete data from the table: "crudio.Blogs"
+  """
+  delete_crudio_Blogs(
+    """filter the rows which have to be deleted"""
+    where: crudio_Blogs_bool_exp!
+  ): crudio_Blogs_mutation_response
+
+  """
+  delete single row from the table: "crudio.Blogs"
+  """
+  delete_crudio_Blogs_by_pk(id: uuid!): crudio_Blogs
+
+  """
+  delete data from the table: "crudio.Cactii"
+  """
+  delete_crudio_Cactii(
+    """filter the rows which have to be deleted"""
+    where: crudio_Cactii_bool_exp!
+  ): crudio_Cactii_mutation_response
+
+  """
+  delete single row from the table: "crudio.Cactii"
+  """
+  delete_crudio_Cactii_by_pk(id: uuid!): crudio_Cactii
+
+  """
+  delete data from the table: "crudio.Clients"
+  """
+  delete_crudio_Clients(
+    """filter the rows which have to be deleted"""
+    where: crudio_Clients_bool_exp!
+  ): crudio_Clients_mutation_response
+
+  """
+  delete single row from the table: "crudio.Clients"
+  """
+  delete_crudio_Clients_by_pk(id: uuid!): crudio_Clients
+
+  """
+  delete data from the table: "crudio.Cohorts"
+  """
+  delete_crudio_Cohorts(
+    """filter the rows which have to be deleted"""
+    where: crudio_Cohorts_bool_exp!
+  ): crudio_Cohorts_mutation_response
+
+  """
+  delete single row from the table: "crudio.Cohorts"
+  """
+  delete_crudio_Cohorts_by_pk(id: uuid!): crudio_Cohorts
+
+  """
+  delete data from the table: "crudio.EmployeeOrganisationRoles"
+  """
+  delete_crudio_EmployeeOrganisationRoles(
+    """filter the rows which have to be deleted"""
+    where: crudio_EmployeeOrganisationRoles_bool_exp!
+  ): crudio_EmployeeOrganisationRoles_mutation_response
+
+  """
+  delete single row from the table: "crudio.EmployeeOrganisationRoles"
+  """
+  delete_crudio_EmployeeOrganisationRoles_by_pk(id: uuid!): crudio_EmployeeOrganisationRoles
+
+  """
+  delete data from the table: "crudio.Employees"
+  """
+  delete_crudio_Employees(
+    """filter the rows which have to be deleted"""
+    where: crudio_Employees_bool_exp!
+  ): crudio_Employees_mutation_response
+
+  """
+  delete single row from the table: "crudio.Employees"
+  """
+  delete_crudio_Employees_by_pk(id: uuid!): crudio_Employees
+
+  """
+  delete data from the table: "crudio.OrganisationDepartments"
+  """
+  delete_crudio_OrganisationDepartments(
+    """filter the rows which have to be deleted"""
+    where: crudio_OrganisationDepartments_bool_exp!
+  ): crudio_OrganisationDepartments_mutation_response
+
+  """
+  delete single row from the table: "crudio.OrganisationDepartments"
+  """
+  delete_crudio_OrganisationDepartments_by_pk(id: uuid!): crudio_OrganisationDepartments
+
+  """
+  delete data from the table: "crudio.OrganisationRoles"
+  """
+  delete_crudio_OrganisationRoles(
+    """filter the rows which have to be deleted"""
+    where: crudio_OrganisationRoles_bool_exp!
+  ): crudio_OrganisationRoles_mutation_response
+
+  """
+  delete single row from the table: "crudio.OrganisationRoles"
+  """
+  delete_crudio_OrganisationRoles_by_pk(id: uuid!): crudio_OrganisationRoles
+
+  """
+  delete data from the table: "crudio.Organisations"
+  """
+  delete_crudio_Organisations(
+    """filter the rows which have to be deleted"""
+    where: crudio_Organisations_bool_exp!
+  ): crudio_Organisations_mutation_response
+
+  """
+  delete single row from the table: "crudio.Organisations"
+  """
+  delete_crudio_Organisations_by_pk(id: uuid!): crudio_Organisations
+
+  """
+  delete data from the table: "crudio.Programs"
+  """
+  delete_crudio_Programs(
+    """filter the rows which have to be deleted"""
+    where: crudio_Programs_bool_exp!
+  ): crudio_Programs_mutation_response
+
+  """
+  delete single row from the table: "crudio.Programs"
+  """
+  delete_crudio_Programs_by_pk(id: uuid!): crudio_Programs
+
+  """
+  delete data from the table: "crudio.Surveys"
+  """
+  delete_crudio_Surveys(
+    """filter the rows which have to be deleted"""
+    where: crudio_Surveys_bool_exp!
+  ): crudio_Surveys_mutation_response
+
+  """
+  delete single row from the table: "crudio.Surveys"
+  """
+  delete_crudio_Surveys_by_pk(id: uuid!): crudio_Surveys
+
+  """
+  delete data from the table: "crudio.Tags"
+  """
+  delete_crudio_Tags(
+    """filter the rows which have to be deleted"""
+    where: crudio_Tags_bool_exp!
+  ): crudio_Tags_mutation_response
+
+  """
+  delete single row from the table: "crudio.Tags"
+  """
+  delete_crudio_Tags_by_pk(id: uuid!): crudio_Tags
+
+  """
+  delete data from the table: "crudio.Users"
+  """
+  delete_crudio_Users(
+    """filter the rows which have to be deleted"""
+    where: crudio_Users_bool_exp!
+  ): crudio_Users_mutation_response
+
+  """
+  delete single row from the table: "crudio.Users"
+  """
+  delete_crudio_Users_by_pk(id: uuid!): crudio_Users
+
+  """
+  insert data into the table: "crudio.BlogTags"
+  """
+  insert_crudio_BlogTags(
+    """the rows to be inserted"""
+    objects: [crudio_BlogTags_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_BlogTags_on_conflict
+  ): crudio_BlogTags_mutation_response
+
+  """
+  insert a single row into the table: "crudio.BlogTags"
+  """
+  insert_crudio_BlogTags_one(
+    """the row to be inserted"""
+    object: crudio_BlogTags_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_BlogTags_on_conflict
+  ): crudio_BlogTags
+
+  """
+  insert data into the table: "crudio.Blogs"
+  """
+  insert_crudio_Blogs(
+    """the rows to be inserted"""
+    objects: [crudio_Blogs_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_Blogs_on_conflict
+  ): crudio_Blogs_mutation_response
+
+  """
+  insert a single row into the table: "crudio.Blogs"
+  """
+  insert_crudio_Blogs_one(
+    """the row to be inserted"""
+    object: crudio_Blogs_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_Blogs_on_conflict
+  ): crudio_Blogs
+
+  """
+  insert data into the table: "crudio.Cactii"
+  """
+  insert_crudio_Cactii(
+    """the rows to be inserted"""
+    objects: [crudio_Cactii_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_Cactii_on_conflict
+  ): crudio_Cactii_mutation_response
+
+  """
+  insert a single row into the table: "crudio.Cactii"
+  """
+  insert_crudio_Cactii_one(
+    """the row to be inserted"""
+    object: crudio_Cactii_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_Cactii_on_conflict
+  ): crudio_Cactii
+
+  """
+  insert data into the table: "crudio.Clients"
+  """
+  insert_crudio_Clients(
+    """the rows to be inserted"""
+    objects: [crudio_Clients_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_Clients_on_conflict
+  ): crudio_Clients_mutation_response
+
+  """
+  insert a single row into the table: "crudio.Clients"
+  """
+  insert_crudio_Clients_one(
+    """the row to be inserted"""
+    object: crudio_Clients_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_Clients_on_conflict
+  ): crudio_Clients
+
+  """
+  insert data into the table: "crudio.Cohorts"
+  """
+  insert_crudio_Cohorts(
+    """the rows to be inserted"""
+    objects: [crudio_Cohorts_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_Cohorts_on_conflict
+  ): crudio_Cohorts_mutation_response
+
+  """
+  insert a single row into the table: "crudio.Cohorts"
+  """
+  insert_crudio_Cohorts_one(
+    """the row to be inserted"""
+    object: crudio_Cohorts_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_Cohorts_on_conflict
+  ): crudio_Cohorts
+
+  """
+  insert data into the table: "crudio.EmployeeOrganisationRoles"
+  """
+  insert_crudio_EmployeeOrganisationRoles(
+    """the rows to be inserted"""
+    objects: [crudio_EmployeeOrganisationRoles_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_EmployeeOrganisationRoles_on_conflict
+  ): crudio_EmployeeOrganisationRoles_mutation_response
+
+  """
+  insert a single row into the table: "crudio.EmployeeOrganisationRoles"
+  """
+  insert_crudio_EmployeeOrganisationRoles_one(
+    """the row to be inserted"""
+    object: crudio_EmployeeOrganisationRoles_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_EmployeeOrganisationRoles_on_conflict
+  ): crudio_EmployeeOrganisationRoles
+
+  """
+  insert data into the table: "crudio.Employees"
+  """
+  insert_crudio_Employees(
+    """the rows to be inserted"""
+    objects: [crudio_Employees_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_Employees_on_conflict
+  ): crudio_Employees_mutation_response
+
+  """
+  insert a single row into the table: "crudio.Employees"
+  """
+  insert_crudio_Employees_one(
+    """the row to be inserted"""
+    object: crudio_Employees_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_Employees_on_conflict
+  ): crudio_Employees
+
+  """
+  insert data into the table: "crudio.OrganisationDepartments"
+  """
+  insert_crudio_OrganisationDepartments(
+    """the rows to be inserted"""
+    objects: [crudio_OrganisationDepartments_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_OrganisationDepartments_on_conflict
+  ): crudio_OrganisationDepartments_mutation_response
+
+  """
+  insert a single row into the table: "crudio.OrganisationDepartments"
+  """
+  insert_crudio_OrganisationDepartments_one(
+    """the row to be inserted"""
+    object: crudio_OrganisationDepartments_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_OrganisationDepartments_on_conflict
+  ): crudio_OrganisationDepartments
+
+  """
+  insert data into the table: "crudio.OrganisationRoles"
+  """
+  insert_crudio_OrganisationRoles(
+    """the rows to be inserted"""
+    objects: [crudio_OrganisationRoles_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_OrganisationRoles_on_conflict
+  ): crudio_OrganisationRoles_mutation_response
+
+  """
+  insert a single row into the table: "crudio.OrganisationRoles"
+  """
+  insert_crudio_OrganisationRoles_one(
+    """the row to be inserted"""
+    object: crudio_OrganisationRoles_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_OrganisationRoles_on_conflict
+  ): crudio_OrganisationRoles
+
+  """
+  insert data into the table: "crudio.Organisations"
+  """
+  insert_crudio_Organisations(
+    """the rows to be inserted"""
+    objects: [crudio_Organisations_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_Organisations_on_conflict
+  ): crudio_Organisations_mutation_response
+
+  """
+  insert a single row into the table: "crudio.Organisations"
+  """
+  insert_crudio_Organisations_one(
+    """the row to be inserted"""
+    object: crudio_Organisations_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_Organisations_on_conflict
+  ): crudio_Organisations
+
+  """
+  insert data into the table: "crudio.Programs"
+  """
+  insert_crudio_Programs(
+    """the rows to be inserted"""
+    objects: [crudio_Programs_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_Programs_on_conflict
+  ): crudio_Programs_mutation_response
+
+  """
+  insert a single row into the table: "crudio.Programs"
+  """
+  insert_crudio_Programs_one(
+    """the row to be inserted"""
+    object: crudio_Programs_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_Programs_on_conflict
+  ): crudio_Programs
+
+  """
+  insert data into the table: "crudio.Surveys"
+  """
+  insert_crudio_Surveys(
+    """the rows to be inserted"""
+    objects: [crudio_Surveys_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_Surveys_on_conflict
+  ): crudio_Surveys_mutation_response
+
+  """
+  insert a single row into the table: "crudio.Surveys"
+  """
+  insert_crudio_Surveys_one(
+    """the row to be inserted"""
+    object: crudio_Surveys_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_Surveys_on_conflict
+  ): crudio_Surveys
+
+  """
+  insert data into the table: "crudio.Tags"
+  """
+  insert_crudio_Tags(
+    """the rows to be inserted"""
+    objects: [crudio_Tags_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_Tags_on_conflict
+  ): crudio_Tags_mutation_response
+
+  """
+  insert a single row into the table: "crudio.Tags"
+  """
+  insert_crudio_Tags_one(
+    """the row to be inserted"""
+    object: crudio_Tags_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_Tags_on_conflict
+  ): crudio_Tags
+
+  """
+  insert data into the table: "crudio.Users"
+  """
+  insert_crudio_Users(
+    """the rows to be inserted"""
+    objects: [crudio_Users_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: crudio_Users_on_conflict
+  ): crudio_Users_mutation_response
+
+  """
+  insert a single row into the table: "crudio.Users"
+  """
+  insert_crudio_Users_one(
+    """the row to be inserted"""
+    object: crudio_Users_insert_input!
+
+    """upsert condition"""
+    on_conflict: crudio_Users_on_conflict
+  ): crudio_Users
+
+  """
+  update data of the table: "crudio.BlogTags"
+  """
+  update_crudio_BlogTags(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: crudio_BlogTags_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_BlogTags_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_BlogTags_bool_exp!
+  ): crudio_BlogTags_mutation_response
+
+  """
+  update single row of the table: "crudio.BlogTags"
+  """
+  update_crudio_BlogTags_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: crudio_BlogTags_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_BlogTags_set_input
+    pk_columns: crudio_BlogTags_pk_columns_input!
+  ): crudio_BlogTags
+
+  """
+  update multiples rows of table: "crudio.BlogTags"
+  """
+  update_crudio_BlogTags_many(
+    """updates to execute, in order"""
+    updates: [crudio_BlogTags_updates!]!
+  ): [crudio_BlogTags_mutation_response]
+
+  """
+  update data of the table: "crudio.Blogs"
+  """
+  update_crudio_Blogs(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Blogs_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_Blogs_bool_exp!
+  ): crudio_Blogs_mutation_response
+
+  """
+  update single row of the table: "crudio.Blogs"
+  """
+  update_crudio_Blogs_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Blogs_set_input
+    pk_columns: crudio_Blogs_pk_columns_input!
+  ): crudio_Blogs
+
+  """
+  update multiples rows of table: "crudio.Blogs"
+  """
+  update_crudio_Blogs_many(
+    """updates to execute, in order"""
+    updates: [crudio_Blogs_updates!]!
+  ): [crudio_Blogs_mutation_response]
+
+  """
+  update data of the table: "crudio.Cactii"
+  """
+  update_crudio_Cactii(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: crudio_Cactii_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Cactii_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_Cactii_bool_exp!
+  ): crudio_Cactii_mutation_response
+
+  """
+  update single row of the table: "crudio.Cactii"
+  """
+  update_crudio_Cactii_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: crudio_Cactii_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Cactii_set_input
+    pk_columns: crudio_Cactii_pk_columns_input!
+  ): crudio_Cactii
+
+  """
+  update multiples rows of table: "crudio.Cactii"
+  """
+  update_crudio_Cactii_many(
+    """updates to execute, in order"""
+    updates: [crudio_Cactii_updates!]!
+  ): [crudio_Cactii_mutation_response]
+
+  """
+  update data of the table: "crudio.Clients"
+  """
+  update_crudio_Clients(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: crudio_Clients_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Clients_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_Clients_bool_exp!
+  ): crudio_Clients_mutation_response
+
+  """
+  update single row of the table: "crudio.Clients"
+  """
+  update_crudio_Clients_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: crudio_Clients_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Clients_set_input
+    pk_columns: crudio_Clients_pk_columns_input!
+  ): crudio_Clients
+
+  """
+  update multiples rows of table: "crudio.Clients"
+  """
+  update_crudio_Clients_many(
+    """updates to execute, in order"""
+    updates: [crudio_Clients_updates!]!
+  ): [crudio_Clients_mutation_response]
+
+  """
+  update data of the table: "crudio.Cohorts"
+  """
+  update_crudio_Cohorts(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Cohorts_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_Cohorts_bool_exp!
+  ): crudio_Cohorts_mutation_response
+
+  """
+  update single row of the table: "crudio.Cohorts"
+  """
+  update_crudio_Cohorts_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Cohorts_set_input
+    pk_columns: crudio_Cohorts_pk_columns_input!
+  ): crudio_Cohorts
+
+  """
+  update multiples rows of table: "crudio.Cohorts"
+  """
+  update_crudio_Cohorts_many(
+    """updates to execute, in order"""
+    updates: [crudio_Cohorts_updates!]!
+  ): [crudio_Cohorts_mutation_response]
+
+  """
+  update data of the table: "crudio.EmployeeOrganisationRoles"
+  """
+  update_crudio_EmployeeOrganisationRoles(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_EmployeeOrganisationRoles_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_EmployeeOrganisationRoles_bool_exp!
+  ): crudio_EmployeeOrganisationRoles_mutation_response
+
+  """
+  update single row of the table: "crudio.EmployeeOrganisationRoles"
+  """
+  update_crudio_EmployeeOrganisationRoles_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_EmployeeOrganisationRoles_set_input
+    pk_columns: crudio_EmployeeOrganisationRoles_pk_columns_input!
+  ): crudio_EmployeeOrganisationRoles
+
+  """
+  update multiples rows of table: "crudio.EmployeeOrganisationRoles"
+  """
+  update_crudio_EmployeeOrganisationRoles_many(
+    """updates to execute, in order"""
+    updates: [crudio_EmployeeOrganisationRoles_updates!]!
+  ): [crudio_EmployeeOrganisationRoles_mutation_response]
+
+  """
+  update data of the table: "crudio.Employees"
+  """
+  update_crudio_Employees(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: crudio_Employees_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Employees_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_Employees_bool_exp!
+  ): crudio_Employees_mutation_response
+
+  """
+  update single row of the table: "crudio.Employees"
+  """
+  update_crudio_Employees_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: crudio_Employees_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Employees_set_input
+    pk_columns: crudio_Employees_pk_columns_input!
+  ): crudio_Employees
+
+  """
+  update multiples rows of table: "crudio.Employees"
+  """
+  update_crudio_Employees_many(
+    """updates to execute, in order"""
+    updates: [crudio_Employees_updates!]!
+  ): [crudio_Employees_mutation_response]
+
+  """
+  update data of the table: "crudio.OrganisationDepartments"
+  """
+  update_crudio_OrganisationDepartments(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_OrganisationDepartments_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_OrganisationDepartments_bool_exp!
+  ): crudio_OrganisationDepartments_mutation_response
+
+  """
+  update single row of the table: "crudio.OrganisationDepartments"
+  """
+  update_crudio_OrganisationDepartments_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_OrganisationDepartments_set_input
+    pk_columns: crudio_OrganisationDepartments_pk_columns_input!
+  ): crudio_OrganisationDepartments
+
+  """
+  update multiples rows of table: "crudio.OrganisationDepartments"
+  """
+  update_crudio_OrganisationDepartments_many(
+    """updates to execute, in order"""
+    updates: [crudio_OrganisationDepartments_updates!]!
+  ): [crudio_OrganisationDepartments_mutation_response]
+
+  """
+  update data of the table: "crudio.OrganisationRoles"
+  """
+  update_crudio_OrganisationRoles(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_OrganisationRoles_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_OrganisationRoles_bool_exp!
+  ): crudio_OrganisationRoles_mutation_response
+
+  """
+  update single row of the table: "crudio.OrganisationRoles"
+  """
+  update_crudio_OrganisationRoles_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_OrganisationRoles_set_input
+    pk_columns: crudio_OrganisationRoles_pk_columns_input!
+  ): crudio_OrganisationRoles
+
+  """
+  update multiples rows of table: "crudio.OrganisationRoles"
+  """
+  update_crudio_OrganisationRoles_many(
+    """updates to execute, in order"""
+    updates: [crudio_OrganisationRoles_updates!]!
+  ): [crudio_OrganisationRoles_mutation_response]
+
+  """
+  update data of the table: "crudio.Organisations"
+  """
+  update_crudio_Organisations(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Organisations_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_Organisations_bool_exp!
+  ): crudio_Organisations_mutation_response
+
+  """
+  update single row of the table: "crudio.Organisations"
+  """
+  update_crudio_Organisations_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Organisations_set_input
+    pk_columns: crudio_Organisations_pk_columns_input!
+  ): crudio_Organisations
+
+  """
+  update multiples rows of table: "crudio.Organisations"
+  """
+  update_crudio_Organisations_many(
+    """updates to execute, in order"""
+    updates: [crudio_Organisations_updates!]!
+  ): [crudio_Organisations_mutation_response]
+
+  """
+  update data of the table: "crudio.Programs"
+  """
+  update_crudio_Programs(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Programs_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_Programs_bool_exp!
+  ): crudio_Programs_mutation_response
+
+  """
+  update single row of the table: "crudio.Programs"
+  """
+  update_crudio_Programs_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Programs_set_input
+    pk_columns: crudio_Programs_pk_columns_input!
+  ): crudio_Programs
+
+  """
+  update multiples rows of table: "crudio.Programs"
+  """
+  update_crudio_Programs_many(
+    """updates to execute, in order"""
+    updates: [crudio_Programs_updates!]!
+  ): [crudio_Programs_mutation_response]
+
+  """
+  update data of the table: "crudio.Surveys"
+  """
+  update_crudio_Surveys(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Surveys_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_Surveys_bool_exp!
+  ): crudio_Surveys_mutation_response
+
+  """
+  update single row of the table: "crudio.Surveys"
+  """
+  update_crudio_Surveys_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Surveys_set_input
+    pk_columns: crudio_Surveys_pk_columns_input!
+  ): crudio_Surveys
+
+  """
+  update multiples rows of table: "crudio.Surveys"
+  """
+  update_crudio_Surveys_many(
+    """updates to execute, in order"""
+    updates: [crudio_Surveys_updates!]!
+  ): [crudio_Surveys_mutation_response]
+
+  """
+  update data of the table: "crudio.Tags"
+  """
+  update_crudio_Tags(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Tags_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_Tags_bool_exp!
+  ): crudio_Tags_mutation_response
+
+  """
+  update single row of the table: "crudio.Tags"
+  """
+  update_crudio_Tags_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Tags_set_input
+    pk_columns: crudio_Tags_pk_columns_input!
+  ): crudio_Tags
+
+  """
+  update multiples rows of table: "crudio.Tags"
+  """
+  update_crudio_Tags_many(
+    """updates to execute, in order"""
+    updates: [crudio_Tags_updates!]!
+  ): [crudio_Tags_mutation_response]
+
+  """
+  update data of the table: "crudio.Users"
+  """
+  update_crudio_Users(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: crudio_Users_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Users_set_input
+
+    """filter the rows which have to be updated"""
+    where: crudio_Users_bool_exp!
+  ): crudio_Users_mutation_response
+
+  """
+  update single row of the table: "crudio.Users"
+  """
+  update_crudio_Users_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: crudio_Users_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: crudio_Users_set_input
+    pk_columns: crudio_Users_pk_columns_input!
+  ): crudio_Users
+
+  """
+  update multiples rows of table: "crudio.Users"
+  """
+  update_crudio_Users_many(
+    """updates to execute, in order"""
+    updates: [crudio_Users_updates!]!
+  ): [crudio_Users_mutation_response]
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+type query_root {
+  """
+  fetch data from the table: "crudio.BlogTags"
+  """
+  crudio_BlogTags_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_BlogTags_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_BlogTags_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_BlogTags_bool_exp
+  ): crudio_BlogTagsConnection!
+
+  """
+  fetch data from the table: "crudio.Blogs"
+  """
+  crudio_Blogs_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Blogs_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Blogs_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Blogs_bool_exp
+  ): crudio_BlogsConnection!
+
+  """
+  fetch data from the table: "crudio.Cactii"
+  """
+  crudio_Cactii_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Cactii_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Cactii_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Cactii_bool_exp
+  ): crudio_CactiiConnection!
+
+  """
+  fetch data from the table: "crudio.Clients"
+  """
+  crudio_Clients_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Clients_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Clients_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Clients_bool_exp
+  ): crudio_ClientsConnection!
+
+  """
+  fetch data from the table: "crudio.Cohorts"
+  """
+  crudio_Cohorts_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Cohorts_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Cohorts_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Cohorts_bool_exp
+  ): crudio_CohortsConnection!
+
+  """
+  fetch data from the table: "crudio.EmployeeOrganisationRoles"
+  """
+  crudio_EmployeeOrganisationRoles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_EmployeeOrganisationRoles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_EmployeeOrganisationRoles_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_EmployeeOrganisationRoles_bool_exp
+  ): crudio_EmployeeOrganisationRolesConnection!
+
+  """
+  fetch data from the table: "crudio.Employees"
+  """
+  crudio_Employees_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Employees_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Employees_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Employees_bool_exp
+  ): crudio_EmployeesConnection!
+
+  """
+  fetch data from the table: "crudio.OrganisationDepartments"
+  """
+  crudio_OrganisationDepartments_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_OrganisationDepartments_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_OrganisationDepartments_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_OrganisationDepartments_bool_exp
+  ): crudio_OrganisationDepartmentsConnection!
+
+  """
+  fetch data from the table: "crudio.OrganisationRoles"
+  """
+  crudio_OrganisationRoles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_OrganisationRoles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_OrganisationRoles_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_OrganisationRoles_bool_exp
+  ): crudio_OrganisationRolesConnection!
+
+  """
+  fetch data from the table: "crudio.Organisations"
+  """
+  crudio_Organisations_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Organisations_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Organisations_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Organisations_bool_exp
+  ): crudio_OrganisationsConnection!
+
+  """
+  fetch data from the table: "crudio.Programs"
+  """
+  crudio_Programs_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Programs_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Programs_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Programs_bool_exp
+  ): crudio_ProgramsConnection!
+
+  """
+  fetch data from the table: "crudio.Surveys"
+  """
+  crudio_Surveys_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Surveys_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Surveys_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Surveys_bool_exp
+  ): crudio_SurveysConnection!
+
+  """
+  fetch data from the table: "crudio.Tags"
+  """
+  crudio_Tags_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Tags_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Tags_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Tags_bool_exp
+  ): crudio_TagsConnection!
+
+  """
+  fetch data from the table: "crudio.Users"
+  """
+  crudio_Users_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Users_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Users_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Users_bool_exp
+  ): crudio_UsersConnection!
+  node(
+    """A globally unique id"""
+    id: ID!
+  ): Node
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "crudio.BlogTags"
+  """
+  crudio_BlogTags_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_BlogTags_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_BlogTags_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_BlogTags_bool_exp
+  ): crudio_BlogTagsConnection!
+
+  """
+  fetch data from the table: "crudio.Blogs"
+  """
+  crudio_Blogs_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Blogs_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Blogs_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Blogs_bool_exp
+  ): crudio_BlogsConnection!
+
+  """
+  fetch data from the table: "crudio.Cactii"
+  """
+  crudio_Cactii_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Cactii_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Cactii_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Cactii_bool_exp
+  ): crudio_CactiiConnection!
+
+  """
+  fetch data from the table: "crudio.Clients"
+  """
+  crudio_Clients_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Clients_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Clients_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Clients_bool_exp
+  ): crudio_ClientsConnection!
+
+  """
+  fetch data from the table: "crudio.Cohorts"
+  """
+  crudio_Cohorts_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Cohorts_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Cohorts_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Cohorts_bool_exp
+  ): crudio_CohortsConnection!
+
+  """
+  fetch data from the table: "crudio.EmployeeOrganisationRoles"
+  """
+  crudio_EmployeeOrganisationRoles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_EmployeeOrganisationRoles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_EmployeeOrganisationRoles_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_EmployeeOrganisationRoles_bool_exp
+  ): crudio_EmployeeOrganisationRolesConnection!
+
+  """
+  fetch data from the table: "crudio.Employees"
+  """
+  crudio_Employees_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Employees_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Employees_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Employees_bool_exp
+  ): crudio_EmployeesConnection!
+
+  """
+  fetch data from the table: "crudio.OrganisationDepartments"
+  """
+  crudio_OrganisationDepartments_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_OrganisationDepartments_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_OrganisationDepartments_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_OrganisationDepartments_bool_exp
+  ): crudio_OrganisationDepartmentsConnection!
+
+  """
+  fetch data from the table: "crudio.OrganisationRoles"
+  """
+  crudio_OrganisationRoles_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_OrganisationRoles_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_OrganisationRoles_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_OrganisationRoles_bool_exp
+  ): crudio_OrganisationRolesConnection!
+
+  """
+  fetch data from the table: "crudio.Organisations"
+  """
+  crudio_Organisations_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Organisations_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Organisations_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Organisations_bool_exp
+  ): crudio_OrganisationsConnection!
+
+  """
+  fetch data from the table: "crudio.Programs"
+  """
+  crudio_Programs_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Programs_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Programs_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Programs_bool_exp
+  ): crudio_ProgramsConnection!
+
+  """
+  fetch data from the table: "crudio.Surveys"
+  """
+  crudio_Surveys_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Surveys_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Surveys_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Surveys_bool_exp
+  ): crudio_SurveysConnection!
+
+  """
+  fetch data from the table: "crudio.Tags"
+  """
+  crudio_Tags_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Tags_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Tags_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Tags_bool_exp
+  ): crudio_TagsConnection!
+
+  """
+  fetch data from the table: "crudio.Users"
+  """
+  crudio_Users_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [crudio_Users_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [crudio_Users_order_by!]
+
+    """filter the rows returned"""
+    where: crudio_Users_bool_exp
+  ): crudio_UsersConnection!
+  node(
+    """A globally unique id"""
+    id: ID!
+  ): Node
+}
+
+scalar timestamp
+
+"""
+Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'.
+"""
+input timestamp_comparison_exp {
+  _eq: timestamp
+  _gt: timestamp
+  _gte: timestamp
+  _in: [timestamp!]
+  _is_null: Boolean
+  _lt: timestamp
+  _lte: timestamp
+  _neq: timestamp
+  _nin: [timestamp!]
+}
+
+scalar uuid
+
+"""
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+

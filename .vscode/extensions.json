@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "GraphQL.vscode-graphql",
+    "ms-vsliveshare.vsliveshare-pack",
+    "meta.relay"
+  ]
+}

@@ -1,19 +1,13 @@
 import Image from "next/image";
-import Link from "next/link";
-import IonIcon from "../component/ion-icon/ion-icon";
-import IonPage from "../component/ion-page/ion-page";
+import IonIcon from "../../../component/ion-icon/ion-icon";
+import IonPage from "../../../component/ion-page/ion-page";
 
-const Home = () => {
+const BlogPostIdPage = () => {
   return (
     <IonPage>
       <ion-header translucent>
         <ion-toolbar>
           <ion-title>Round</ion-title>
-          <ion-buttons slot="end">
-            <Link href="/blog-post" passHref>
-              <ion-button>Blog Posts</ion-button>
-            </Link>
-          </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content fullscreen>
@@ -90,4 +84,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default BlogPostIdPage;
