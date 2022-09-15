@@ -35,4 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 
 #relay
-__generated__
+# would ideally not commit this, but is making set up more tedious, allowing it to be commited
+# __generated__

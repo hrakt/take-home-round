@@ -35,8 +35,6 @@ You may need to reload VSCode to get extensions to register: cmd/ctrl + shift + 
 
 You may even need to quit VSCode and re-open it
 
-The relay compiler should have a button on the bottom toolbar on the right if installed/loaded correctly
-
 (Only if that doesn't work, you need to run the compiler via the terminal) {
 
 ```bash
