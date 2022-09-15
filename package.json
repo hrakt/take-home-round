@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently --kill-others \"npm run start-watch\" \"npm run wp-server\"",
+    "dev": "concurrently --kill-others \"npm run next-dev\"",
     "next-dev": "next dev",
     "next-build": "next build",
     "next-start": "next start",
