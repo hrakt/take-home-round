@@ -1,8 +1,13 @@
+import { Suspense } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import IonIcon from "../../../component/ion-icon/ion-icon";
 import IonPage from "../../../component/ion-page/ion-page";
+import BlogPost from "../../../component/blog-post/blog-post";
 
 const BlogPostIdPage = () => {
+  const router = useRouter();
+  const blogId = router.query["blog-post-id"];
   return (
     <IonPage>
       <ion-header translucent>
@@ -11,7 +16,7 @@ const BlogPostIdPage = () => {
         </ion-toolbar>
       </ion-header>
       <ion-content fullscreen>
-        <ion-grid>
+        {/* <ion-grid>
           <ion-row>
             {new Array(8).fill("").map((k, i) => {
               return (
@@ -43,7 +48,10 @@ const BlogPostIdPage = () => {
               );
             })}
           </ion-row>
-        </ion-grid>
+        </ion-grid> */}
+        <Suspense fallback={<ion-progress-bar type="indeterminate" />}>
+          <BlogPost blogId={blogId} />
+        </Suspense>
       </ion-content>
       <ion-footer>
         <ion-toolbar>
