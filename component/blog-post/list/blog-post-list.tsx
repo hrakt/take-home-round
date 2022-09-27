@@ -1,5 +1,5 @@
+import Link from "next/link";
 import { graphql, useLazyLoadQuery } from "react-relay";
-import { blogPostListQuery } from "../../../__generated__/blogPostListQuery.graphql";
 
 const BlogPostListQuery = graphql`
   query blogPostListQuery {
@@ -8,6 +8,12 @@ const BlogPostListQuery = graphql`
         node {
           id
           article
+          BlogTags {
+            Tag {
+              id
+              name
+            }
+          }
         }
       }
     }
@@ -22,7 +28,9 @@ const BlogPostList = () => {
       {query.crudio_Blogs_connection.edges.map((edge) => (
         <ion-item key={edge.node.id}>
           <ion-label>
-            <p>{edge.node.article}</p>
+            <Link href={`/blog-post/${edge.node.id}`}>
+              <p>{edge.node.article}</p>
+            </Link>
           </ion-label>
         </ion-item>
       ))}

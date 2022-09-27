@@ -21,7 +21,14 @@ const Home = () => {
           <ion-row>
             {new Array(8).fill("").map((k, i) => {
               return (
-                <ion-col key={i} size="3">
+                <ion-col
+                  key={i}
+                  size-lg="3" //@Unresponsive
+                  size-md="4" //@Unresponsive
+                  size-sm="6" //@Unresponsive
+                  size-xs="12" //@Unresponsive
+                  size="3"
+                >
                   <ion-card>
                     <Image
                       // actual image size: 900 × 583 pixels
