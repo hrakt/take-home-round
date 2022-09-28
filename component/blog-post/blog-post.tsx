@@ -8,21 +8,14 @@ import { graphql, useLazyLoadQuery } from "react-relay";
 import { blogPostQuery } from "../../__generated__/blogPostQuery.graphql";
 
 const BlogPostQuery = graphql`
-  query blogPostQuery {
-    crudio_Blogs_connection {
-      edges {
-        node {
-          id
-          article
-          BlogTags_connection {
-            edges {
-              node {
-                id
-                Tag {
-                  name
-                }
-              }
-            }
+  query blogPostQuery($id: ID!) {
+    node(id: $id) {
+      ... on crudio_Blogs {
+        id
+        article
+        BlogTags {
+          Tag {
+            name
           }
         }
       }
@@ -35,27 +28,23 @@ type Props = {
 };
 
 const BlogPost = ({ blogId }: Props) => {
-  const query = useLazyLoadQuery<blogPostQuery>(BlogPostQuery, {}); //@BlogPostId
-  const node = query.crudio_Blogs_connection.edges.find(
-    //@BlogPostId
-    ({ node }) => node.id == blogId //@BlogPostId
-  );
+  const query = useLazyLoadQuery<blogPostQuery>(BlogPostQuery, {
+    id: blogId as string,
+  }); //@BlogPostId
+  const { node } = query;
   return (
     <ion-content>
-      {node?.node.article}
+      {node?.article}
       <ion-list>
         <ion-list-header>Tags</ion-list-header>
-        {node?.node.BlogTags_connection.edges.map(
+        {node?.BlogTags?.map(({ Tag }) => {
           //@Tags
-          (tag: { node: { Tag: { name: string } | null } } | null) => {
-            //@Tags
-            return (
-              <ion-item>
-                <ion-label>{tag?.node?.Tag?.name}</ion-label>
-              </ion-item>
-            ); //@Tags
-          }
-        )}
+          return (
+            <ion-item>
+              <ion-label>{Tag?.name}</ion-label>
+            </ion-item>
+          ); //@Tags
+        })}
       </ion-list>
     </ion-content>
   ); //@BlogPostId

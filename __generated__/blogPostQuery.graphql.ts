@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bea0594267e1c3f21afdeed52fcf79f0>>
+ * @generated SignedSource<<95744bb9272f3c54c8da36cc360520b3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,26 +9,19 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type blogPostQuery$variables = {};
+export type blogPostQuery$variables = {
+  id: string;
+};
 export type blogPostQuery$data = {
-  readonly crudio_Blogs_connection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly BlogTags_connection: {
-          readonly edges: ReadonlyArray<{
-            readonly node: {
-              readonly Tag: {
-                readonly name: string;
-              } | null;
-              readonly id: string;
-            };
-          }>;
-        };
-        readonly article: string | null;
-        readonly id: string;
-      };
+  readonly node: {
+    readonly BlogTags?: ReadonlyArray<{
+      readonly Tag: {
+        readonly name: string;
+      } | null;
     }>;
-  };
+    readonly article?: string | null;
+    readonly id?: string;
+  } | null;
 };
 export type blogPostQuery = {
   response: blogPostQuery$data;
@@ -36,21 +29,35 @@ export type blogPostQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v1 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "article",
   "storageKey": null
 },
-v2 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -59,80 +66,41 @@ v2 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "blogPostQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "crudio_BlogsConnection",
+        "args": (v1/*: any*/),
+        "concreteType": null,
         "kind": "LinkedField",
-        "name": "crudio_Blogs_connection",
+        "name": "node",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "crudio_BlogsEdge",
-            "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
+            "kind": "InlineFragment",
             "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "crudio_Blogs",
+                "concreteType": "crudio_BlogTags",
                 "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
+                "name": "BlogTags",
+                "plural": true,
                 "selections": [
-                  (v0/*: any*/),
-                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "crudio_BlogTagsConnection",
+                    "concreteType": "crudio_Tags",
                     "kind": "LinkedField",
-                    "name": "BlogTags_connection",
+                    "name": "Tag",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "crudio_BlogTagsEdge",
-                        "kind": "LinkedField",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "crudio_BlogTags",
-                            "kind": "LinkedField",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              (v0/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "crudio_Tags",
-                                "kind": "LinkedField",
-                                "name": "Tag",
-                                "plural": false,
-                                "selections": [
-                                  (v2/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -140,7 +108,8 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": null
+            "type": "crudio_Blogs",
+            "abstractKey": null
           }
         ],
         "storageKey": null
@@ -151,88 +120,58 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "blogPostQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "crudio_BlogsConnection",
+        "args": (v1/*: any*/),
+        "concreteType": null,
         "kind": "LinkedField",
-        "name": "crudio_Blogs_connection",
+        "name": "node",
         "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "crudio_BlogsEdge",
-            "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
+            "kind": "ScalarField",
+            "name": "__typename",
+            "storageKey": null
+          },
+          (v2/*: any*/),
+          {
+            "kind": "InlineFragment",
             "selections": [
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "crudio_Blogs",
+                "concreteType": "crudio_BlogTags",
                 "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
+                "name": "BlogTags",
+                "plural": true,
                 "selections": [
-                  (v0/*: any*/),
-                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "crudio_BlogTagsConnection",
+                    "concreteType": "crudio_Tags",
                     "kind": "LinkedField",
-                    "name": "BlogTags_connection",
+                    "name": "Tag",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "crudio_BlogTagsEdge",
-                        "kind": "LinkedField",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "crudio_BlogTags",
-                            "kind": "LinkedField",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              (v0/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "crudio_Tags",
-                                "kind": "LinkedField",
-                                "name": "Tag",
-                                "plural": false,
-                                "selections": [
-                                  (v2/*: any*/),
-                                  (v0/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
+                      (v4/*: any*/),
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
-                  }
+                  },
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": null
+            "type": "crudio_Blogs",
+            "abstractKey": null
           }
         ],
         "storageKey": null
@@ -240,16 +179,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bbaf3a226b5b65e4cd908f99a9f8460d",
+    "cacheID": "08f14c41a7f963a692ec9c09be379567",
     "id": null,
     "metadata": {},
     "name": "blogPostQuery",
     "operationKind": "query",
-    "text": "query blogPostQuery {\n  crudio_Blogs_connection {\n    edges {\n      node {\n        id\n        article\n        BlogTags_connection {\n          edges {\n            node {\n              id\n              Tag {\n                name\n                id\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query blogPostQuery(\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ... on crudio_Blogs {\n      id\n      article\n      BlogTags {\n        Tag {\n          name\n          id\n        }\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f1578eaf2ee6c65cf55d826749d8da1d";
+(node as any).hash = "37c5fee8ea578a31e0345b81a496a4f2";
 
 export default node;
